@@ -2,7 +2,7 @@
 
 module Authenticate
   def current_user
-    @user = User.find_by(access_token: params[:access_token])
+    @user ||= User.find_by(access_token: params[:access_token])
   end
 
   def authenticate_with_token!
