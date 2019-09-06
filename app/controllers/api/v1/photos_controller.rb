@@ -2,9 +2,9 @@ class Api::V1::PhotosController < ApplicationController
 
   def create
     room = Room.find(params[:room_id])
-    @photo = room.photos.create(photo_params)
+    photo = room.photos.create(photo_params)
 
-    render json: photo, status: :ok
+    render json: photo, status: :created
   end
 
   def destroy
