@@ -13,7 +13,7 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false }
   validates :password,
             presence: true,
-            length: { minumun: 8 }
+            length: { minimum: 8 }
 
   private
 
