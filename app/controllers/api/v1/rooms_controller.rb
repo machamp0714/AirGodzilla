@@ -7,7 +7,11 @@ class Api::V1::RoomsController < ApplicationController
     else
       render json: { error: @room.errors, is_success: false }, status: 422
     end
+  end
 
+  def destroy
+    Room.find(params[:id]).destroy
+    head :no_content
   end
 
   private
