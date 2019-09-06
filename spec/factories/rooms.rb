@@ -1,20 +1,20 @@
 FactoryBot.define do
-  factory :room do
-    home_type { "MyString" }
-    room_type { "MyString" }
-    accommodate { 1 }
-    bed_room { 1 }
+  factory :alice_room, class: "Room" do
+    home_type { "private" }
+    room_type { "relax" }
+    accommodate { 3 }
+    bed_room { 4 }
     bath_room { 1 }
-    listing_name { "MyString" }
-    summary { "MyText" }
-    address { "MyString" }
-    is_tv { false }
-    is_kitchen { false }
-    is_air { false }
-    is_heating { false }
-    is_internet { false }
-    price { 1 }
-    active { false }
-    user { nil }
+    listing_name { "Beautiful room for you" }
+    summary { "good place!" }
+    address { "東京駅" }
+    is_tv { true }
+    is_kitchen { true }
+    is_air { true }
+    is_heating { true }
+    is_internet { true }
+    price { 100 }
+    active { true }
+    association :user, factory: :alice
   end
 end
