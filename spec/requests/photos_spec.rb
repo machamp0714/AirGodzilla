@@ -9,11 +9,13 @@ RSpec.describe "Photos", type: :request do
   let!(:photo) { FactoryBot.create(:photo, room: room) }
 
   it "Adds a photo" do
-    post api_v1_room_photos_path(room), params: {
-      photo: {
-        image: fixture_file_upload(image_path)
+    expect {
+      post api_v1_room_photos_path(room), params: {
+        photo: {
+          image: fixture_file_upload(image_path)
+        }
       }
-    }
+    }.to change(room.photos, :count).by(1)
   end
 
   it "delete a photo" do
