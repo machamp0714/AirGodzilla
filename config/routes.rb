@@ -3,7 +3,8 @@
 Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
-      get 'me', to: 'users#me'
+      resources :rooms, only: %i[index create destroy]
+
       post 'signup', to: 'users#create'
       post 'login', to: 'sessions#create'
     end
