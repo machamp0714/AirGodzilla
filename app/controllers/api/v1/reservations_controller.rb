@@ -28,6 +28,26 @@ class Api::V1::ReservationsController < ApplicationController
     end
   end
 
+  def approve
+    reservation = Reservation.find(params[:id])
+    if current_user.id == reservation.room.user_id
+      reservation.Approved!
+      render json: { is_success: true }, status: :ok
+    else
+      render json: { error: 'No Permission', is_success: false }, status: 404
+    end
+  end
+
+  def dicline
+    reservation = Reservation.find(params[:id])
+    if current_user.id == reservation.room.user_id
+      reservation.Dicline!
+      render json: { is_success: true }, status: :ok
+    else
+      render json: { error: 'No Permission', is_success: false }, status: 404
+    end
+  end
+
   private
 
   def reservation_params
