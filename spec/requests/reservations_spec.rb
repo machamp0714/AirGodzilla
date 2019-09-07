@@ -48,4 +48,50 @@ RSpec.describe 'Reservations API', type: :request do
       end
     end
   end
+
+  before do
+    @reservation = FactoryBot.create(:reservation, user: guest, room: @room)
+  end
+
+  describe 'booking with approve function' do
+    context 'have a permisson' do
+      it 'responds a status 200' do
+        patch approve_api_v1_room_reservation_path(@room, @reservation), params: {
+          access_token: host.access_token
+        }
+        expect(response).to have_http_status 200
+      end
+    end
+
+    context 'not permission' do
+      it 'responds 404 error' do
+        patch approve_api_v1_room_reservation_path(@room, @reservation), params: {
+          access_token: guest.access_token
+        }
+        expect(response.body).to include 'No Permission'
+        expect(response).to have_http_status 404
+      end
+    end
+  end
+
+  describe 'booking with dicline function' do
+    context 'have a permission' do
+      it 'responds a status 200' do
+        patch dicline_api_v1_room_reservation_path(@room, @reservation), params: {
+          access_token: host.access_token
+        }
+        expect(response).to have_http_status 200
+      end
+    end
+
+    context 'no permission' do
+      it 'responds a 404 error' do
+        patch dicline_api_v1_room_reservation_path(@room, @reservation), params: {
+          access_token: guest.access_token
+        }
+        expect(response.body).to include 'No Permission'
+        expect(response).to have_http_status 404
+      end
+    end
+  end
 end
