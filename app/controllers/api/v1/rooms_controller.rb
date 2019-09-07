@@ -1,4 +1,11 @@
+# frozen_string_literal: true
+
 class Api::V1::RoomsController < ApplicationController
+  def index
+    rooms = Room.where(active: true)
+
+    render json: rooms, status: :ok
+  end
 
   def create
     @room = current_user.rooms.build(room_params)
@@ -16,22 +23,22 @@ class Api::V1::RoomsController < ApplicationController
 
   private
 
-    def room_params
-      params.require(:room).permit(
-        :home_type,
-        :room_type,
-        :accommodate,
-        :bed_room,
-        :bath_room,
-        :listing_name,
-        :summary,
-        :address,
-        :is_tv,
-        :is_kitchen,
-        :is_air,
-        :is_heating,
-        :is_internet,
-        :price
-      )
-    end
+  def room_params
+    params.require(:room).permit(
+      :home_type,
+      :room_type,
+      :accommodate,
+      :bed_room,
+      :bath_room,
+      :listing_name,
+      :summary,
+      :address,
+      :is_tv,
+      :is_kitchen,
+      :is_air,
+      :is_heating,
+      :is_internet,
+      :price
+    )
+  end
 end

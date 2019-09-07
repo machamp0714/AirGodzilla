@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_07_030119) do
+ActiveRecord::Schema.define(version: 2019_09_07_041655) do
 
   create_table "photos", force: :cascade do |t|
     t.string "image"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 2019_09_07_030119) do
   end
 
   create_table "reservations", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.integer "price"
     t.integer "total"
     t.datetime "created_at", null: false
