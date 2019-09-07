@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :reservation do
-    start_time { "2019-09-07 11:59:31" }
-    end_time { "2019-09-07 11:59:31" }
-    price { 1 }
-    total { 1 }
+    start_date { '2019-09-07 15:00:00' }
+    end_date { '2019-09-09 15:00:00' }
+    price { 100 }
+    total { 300 }
+    association :user, factory: :bob
+    association :room, factory: :alice_room
   end
 end
