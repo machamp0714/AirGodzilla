@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class Room < ApplicationRecord
   belongs_to :user
   has_many :photos, dependent: :destroy
+  has_many :reservations, dependet: :destroy
 
   validates :home_type, presence: true
   validates :room_type, presence: true
