@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Room < ApplicationRecord
+  enum instant: { Request: 0, Instant: 1 }
+
   belongs_to :user
   has_many :photos, dependent: :destroy
   has_many :reservations, dependent: :destroy
