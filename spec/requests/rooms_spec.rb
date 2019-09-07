@@ -4,7 +4,7 @@ RSpec.describe "Rooms API", type: :request do
   let(:user) { FactoryBot.create(:alice) }
   
   describe "POST create" do
-    let(:valid_params) { FactoryBot.attributes_for(:alice_room, user: user) }
+    let(:valid_params) { FactoryBot.attributes_for(:instant_room, user: user) }
 
     context "when the request is valid" do
       it "creates a room" do
@@ -21,7 +21,7 @@ RSpec.describe "Rooms API", type: :request do
   end
 
   describe "DELETE" do
-    let!(:room) { FactoryBot.create(:alice_room, user: user) }
+    let!(:room) { FactoryBot.create(:instant_room, user: user) }
 
     it "delete a room" do
       expect {

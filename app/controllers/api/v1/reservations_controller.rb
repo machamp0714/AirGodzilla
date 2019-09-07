@@ -17,10 +17,14 @@ class Api::V1::ReservationsController < ApplicationController
         reservation.price = room.price
         reservation.total = room.price * days
 
-        if reservation.save
-          render json: { is_success: true }, status: :created
+        if reservation.Waiting!
+          if room.Request?
+            render json: { message: 'Request sent successfully', is_success: true }, status: :ok
+          else
+            render json: { message: 'Reservation created successfully', is_success: true }, status: :ok
+          end
         else
-          render json: { error: reservation.errors, is_success: false }, status: :unprpcessable_entity
+          render json: { error: 'cannot make a reservation!', is_success: false }, status: 404
         end
       else
         render json: { alert: 'Invalid request!', is_success: false }, status: 404
