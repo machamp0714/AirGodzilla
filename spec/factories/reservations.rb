@@ -9,4 +9,13 @@ FactoryBot.define do
     association :user, factory: :bob
     association :room, factory: :alice_room
   end
+
+  factory :invalid_reservation, class: 'Reservation' do
+    start_date { '' }
+    end_date { '' }
+    price { 100 }
+    total { 300 }
+    association :user, factory: :bob
+    association :room, factory: :alice_room
+  end
 end
