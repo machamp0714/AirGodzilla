@@ -24,7 +24,6 @@ RSpec.describe 'Reservations API', type: :request do
         end.to change(guest.reservations, :count).by(1)
 
         expect(response).to have_http_status 200
-        expect(response.body).to include "Reservation created successfully"
       end
     end
 
