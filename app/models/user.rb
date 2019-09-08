@@ -16,7 +16,11 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false }
   validates :password,
             presence: true,
-            length: { minimum: 8 }
+            length: { minimum: 8 },
+            # validationの実行タイミングを指定する。
+            on: :create
+            # 属性の値がblank?に相当する時、validationをスキップする
+            # allow_blank: true
 
   private
 

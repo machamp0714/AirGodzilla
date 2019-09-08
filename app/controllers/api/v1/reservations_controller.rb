@@ -21,7 +21,7 @@ class Api::V1::ReservationsController < ApplicationController
           if room.Request?
             render json: { message: 'Request sent successfully', is_success: true }, status: :ok
           else
-            render json: { message: 'Reservation created successfully', is_success: true }, status: :ok
+            charge(room, reservation)
           end
         else
           render json: { error: 'cannot make a reservation!', is_success: false }, status: 404
@@ -53,6 +53,28 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   private
+
+  def charge(room, reservation)
+    if reservation.user.stripe_id.present?
+      customer = Stripe::Customer.retrieve(reservation.user.stripe_id)
+      charge = Stripe::Charge.create(
+        customer: customer.id,
+        amount: reservation.total * 100,
+        description: room.listing_name,
+        currency: "usd"
+      )
+
+      if charge
+        reservation.Approved!
+      else
+        reservation.Dicline!
+      end
+      render json: { is_success: true }, status: :ok
+    end
+  rescue Stripe::CardError => e
+    reservation.Dicline!
+    render json: { error: e.message, is_success: false }, status: 404
+  end
 
   def reservation_params
     params.require(:reservation).permit(:start_date, :end_date)

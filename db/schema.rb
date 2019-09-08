@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_07_074425) do
+ActiveRecord::Schema.define(version: 2019_09_07_145451) do
 
   create_table "photos", force: :cascade do |t|
     t.string "image"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_09_07_074425) do
     t.string "access_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

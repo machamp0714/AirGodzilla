@@ -50,3 +50,8 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'active_model_serializers'
+gem 'rack-cors'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'stripe'
+gem 'pry-byebug'

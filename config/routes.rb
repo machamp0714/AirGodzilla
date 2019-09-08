@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
       post 'signup', to: 'users#create'
       post 'login', to: 'sessions#create'
+      post 'add_card', to: 'users#add_card'
     end
   end
 end
