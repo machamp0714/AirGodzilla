@@ -18,7 +18,8 @@ RSpec.describe 'Reservations API', type: :request do
     context 'room is instant and request is valid' do
       it 'make a reservation' do
         expect do
-          post api_v1_room_reservations_path(@instant_room), params: {
+          post api_v1_reservations_path, params: {
+            room_id: @instant_room.id,
             access_token: guest.access_token,
             reservation: valid_attributes
           }
@@ -31,7 +32,8 @@ RSpec.describe 'Reservations API', type: :request do
     context 'room is request and request is valid' do
       it 'make a reservation' do
         expect do
-          post api_v1_room_reservations_path(@request_room), params: {
+          post api_v1_reservations_path, params: {
+            room_id: @request_room.id,
             access_token: guest.access_token,
             reservation: valid_attributes
           }
@@ -44,7 +46,8 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'user equal the room host user' do
       it 'responds 404 error' do
-        post api_v1_room_reservations_path(@instant_room), params: {
+        post api_v1_reservations_path, params: {
+          room_id: @instant_room.id,
           access_token: host.access_token,
           reservation: valid_attributes
         }
@@ -55,7 +58,8 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'guest have not stripe_id' do
       it 'responds 404 error' do
-        post api_v1_room_reservations_path(@instant_room), params: {
+        post api_v1_reservations_path, params: {
+          room_id: @instant_room.id,
           access_token: user_have_not_stripe.access_token,
           reservation: valid_attributes
         }
@@ -72,7 +76,8 @@ RSpec.describe 'Reservations API', type: :request do
   describe 'booking with approve function' do
     context 'have a permisson' do
       it 'responds a status 200' do
-        patch approve_api_v1_room_reservation_path(@instant_room, @reservation), params: {
+        patch approve_api_v1_reservation_path(@reservation), params: {
+          room_id: @instant_room.id,
           access_token: host.access_token
         }
         expect(response).to have_http_status 200
@@ -81,7 +86,8 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'not permission' do
       it 'responds 404 error' do
-        patch approve_api_v1_room_reservation_path(@instant_room, @reservation), params: {
+        patch approve_api_v1_reservation_path(@reservation), params: {
+          room_id: @instant_room.id,
           access_token: guest.access_token
         }
         expect(response.body).to include 'No Permission'
@@ -93,7 +99,8 @@ RSpec.describe 'Reservations API', type: :request do
   describe 'booking with dicline function' do
     context 'have a permission' do
       it 'responds a status 200' do
-        patch dicline_api_v1_room_reservation_path(@instant_room, @reservation), params: {
+        patch dicline_api_v1_reservation_path(@reservation), params: {
+          room_id: @instant_room.id,
           access_token: host.access_token
         }
         expect(response).to have_http_status 200
@@ -102,7 +109,8 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'no permission' do
       it 'responds a 404 error' do
-        patch dicline_api_v1_room_reservation_path(@instant_room, @reservation), params: {
+        patch dicline_api_v1_reservation_path(@reservation), params: {
+          room_id: @instant_room.id,
           access_token: guest.access_token
         }
         expect(response.body).to include 'No Permission'
