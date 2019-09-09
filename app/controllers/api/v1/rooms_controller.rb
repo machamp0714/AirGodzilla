@@ -48,6 +48,14 @@ class Api::V1::RoomsController < ApplicationController
     head :no_content
   end
 
+  def your_listings
+    rooms = current_user.rooms
+    render json: {
+      rooms: rooms.map { |r| r.attributes.merge(image: r.cover_photo, instant: r.instant != 'Request') },
+      is_success: true
+    }, status: :ok
+  end
+
   private
 
   def room_params
