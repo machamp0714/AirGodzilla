@@ -10,6 +10,7 @@ Rails.application.routes.draw do
           get 'reservations', to: 'reservations#reservations_by_room'
         end
       end
+
       resources :reservations, only: %i[create] do
         member do
           patch 'approve', to: 'reservations#approve'

@@ -23,6 +23,7 @@ class Api::V1::ReservationsController < ApplicationController
           render json: { message: 'Request sent successfully', is_success: true }, status: :ok
         else
           charge(room, reservation)
+          render json: { is_success: true }, status: :ok
         end
       else
         render json: { error: 'cannot make a reservation!', is_success: false }, status: 404
@@ -40,7 +41,7 @@ class Api::V1::ReservationsController < ApplicationController
   def approve
     reservation = Reservation.find(params[:id])
     if current_user.id == reservation.room.user_id
-      reservation.Approved!
+      charge(reservation.room, reservation)
       render json: { is_success: true }, status: :ok
     else
       render json: { error: 'No Permission', is_success: false }, status: 404
@@ -74,7 +75,6 @@ class Api::V1::ReservationsController < ApplicationController
       else
         reservation.Dicline!
       end
-      render json: { is_success: true }, status: :ok
     end
   rescue Stripe::CardError => e
     reservation.Dicline!
