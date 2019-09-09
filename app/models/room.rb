@@ -15,4 +15,12 @@ class Room < ApplicationRecord
   validates :accommodate, presence: true
   validates :bed_room, presence: true
   validates :bath_room, presence: true
+
+  def cover_photo
+    if photos.present?
+      photos[0].image_url
+    else
+      'public/system/photos/images/blank.jpg'
+    end
+  end
 end
