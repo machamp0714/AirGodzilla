@@ -1,26 +1,77 @@
 import React from "react";
+import axios from "axios";
 
-const Signup = () => {
-  return (
-    <form method="post">
-      <div className="form-group">
-        <label htmlFor="user[name]">ユーザー名</label>
-        <input type="text" id="user[name]" placeholder="ユーザー名" />
-      </div>
+class Signup extends React.Component {
+  state = {
+    name: "",
+    email: "",
+    password: ""
+  };
 
-      <div className="form-group">
-        <label htmlFor="user[email]">メールアドレス</label>
-        <input type="email" id="user[email]" placeholder="メールアドレス" />
-      </div>
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  };
 
-      <div className="form-group">
-        <label htmlFor="user[password]">パスワード</label>
-        <input type="password" id="user[password]" placeholder="パスワード" />
-      </div>
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-      <input type="submit" value="送信" />
-    </form>
-  );
-};
+    const params = {
+      user: {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      }
+    };
+
+    axios
+      .post("http://localhost:3001/api/v1/signup", params)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">ユーザー名</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="ユーザー名"
+            onChange={this.handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">メールアドレス</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="メールアドレス"
+            onChange={this.handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">パスワード</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="パスワード"
+            onChange={this.handleChange}
+          />
+        </div>
+
+        <input type="submit" value="送信" />
+      </form>
+    );
+  }
+}
 
 export default Signup;
