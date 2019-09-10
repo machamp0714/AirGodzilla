@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import SignedInLinks from "./SignedInLinks";
+import SignedOutLinks from "./SignedOutLinks";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -9,7 +12,12 @@ class Navbar extends React.Component {
   }
 
   render = () => {
-    return <h1>navbar</h1>;
+    return (
+      <nav>
+        <Link to="/">AirGodzilla</Link>
+        {this.state.logged ? <SignedInLinks /> : <SignedOutLinks />}
+      </nav>
+    );
   };
 }
 
