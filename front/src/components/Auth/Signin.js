@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
 
-class Signup extends React.Component {
+class Signin extends React.Component {
   state = {
-    name: "",
     email: "",
     password: ""
   };
@@ -17,37 +16,22 @@ class Signup extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const params = {
-      user: {
-        name: this.state.name,
+    axios
+      .post("http://localhost:3001/api/v1/login", {
         email: this.state.email,
         password: this.state.password
-      }
-    };
-
-    axios
-      .post("http://localhost:3001/api/v1/signup", params)
+      })
       .then((response) => {
-        console.log(response);
+        console.log("success");
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error");
       });
   };
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">ユーザー名</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="ユーザー名"
-            onChange={this.handleChange}
-          />
-        </div>
-
         <div className="form-group">
           <label htmlFor="email">メールアドレス</label>
           <input
@@ -67,11 +51,10 @@ class Signup extends React.Component {
             onChange={this.handleChange}
           />
         </div>
-
-        <input type="submit" value="送信" />
+        <input type="submit" value="ログイン" />
       </form>
     );
   }
 }
 
-export default Signup;
+export default Signin;

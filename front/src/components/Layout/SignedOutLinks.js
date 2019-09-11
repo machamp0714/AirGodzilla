@@ -7,6 +7,9 @@ const SignedOutLinks = () => {
       <li>
         <NavLink to="/signup">新規登録</NavLink>
       </li>
+      <li>
+        <NavLink to="/signin">ログイン</NavLink>
+      </li>
     </ul>
   );
 };
