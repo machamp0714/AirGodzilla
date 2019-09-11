@@ -2,7 +2,9 @@
 
 module Authenticate
   def current_user
-    @user ||= User.find_by(access_token: params[:access_token])
+    if user_id = session[:user_id]
+      @current_user ||= User.find_by(id: user_id)
+    end
   end
 
   def login(user)
