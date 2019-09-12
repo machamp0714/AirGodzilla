@@ -14,6 +14,14 @@ class App extends React.Component {
     };
   }
 
+  handleSuccessfulAuth = (data) => {
+    this.props.history.push("/");
+    this.setState({
+      loggedInStatus: "LOGGED_IN",
+      user: data.user
+    });
+  };
+
   render() {
     return (
       <BrowserRouter>
@@ -22,9 +30,12 @@ class App extends React.Component {
           <Route exact path="/" component={Main} />
           <Route
             path="/signup"
-            render={(props) => {
-              <Signup {...props} loggedInStatus={this.state.loggedInStatus} />;
-            }}
+            render={(props) => (
+              <Signup
+                {...props}
+                handleSuccessfulAuth={this.handleSuccessfulAuth}
+              />
+            )}
           />
           <Route path="/signin" component={Signin} />
         </Switch>
