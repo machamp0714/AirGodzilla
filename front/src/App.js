@@ -15,7 +15,6 @@ class App extends React.Component {
   }
 
   handleSuccessfulAuth = (data) => {
-    this.props.history.push("/");
     this.setState({
       loggedInStatus: "LOGGED_IN",
       user: data.user

@@ -21,19 +21,16 @@ class Signup extends React.Component {
     const { name, email, password } = this.state;
 
     axios
-      .post(
-        "http://localhost:3001/api/v1/signup",
-        {
-          user: {
-            name: name,
-            email: email,
-            password: password
-          }
-        },
-        { withCredentials: true }
-      )
+      .post("http://localhost:3001/api/v1/signup", {
+        user: {
+          name: name,
+          email: email,
+          password: password
+        }
+      })
       .then((response) => {
-        if (response.data.status === "created") {
+        console.log(response);
+        if (response.status === 201) {
           this.props.handleSuccessfulAuth(response.data);
         }
       })
