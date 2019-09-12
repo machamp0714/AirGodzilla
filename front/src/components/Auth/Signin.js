@@ -2,10 +2,13 @@ import React from "react";
 import axios from "axios";
 
 class Signin extends React.Component {
-  state = {
-    email: "",
-    password: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -14,19 +17,23 @@ class Signin extends React.Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
+    const { email, password } = this.state;
 
     axios
       .post("http://localhost:3001/api/v1/login", {
-        email: this.state.email,
-        password: this.state.password
+        email: email,
+        password: password
       })
       .then((response) => {
         console.log("success");
       })
-      .catch((error) => {
-        console.log("error");
-      });
+      .catch(
+        (error) => {
+          console.log(error);
+        },
+        { withCredentials: true }
+      );
+    e.preventDefault();
   };
 
   render() {

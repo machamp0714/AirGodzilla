@@ -2,11 +2,14 @@ import React from "react";
 import axios from "axios";
 
 class Signup extends React.Component {
-  state = {
-    name: "",
-    email: "",
-    password: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      email: "",
+      password: ""
+    };
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -15,24 +18,30 @@ class Signup extends React.Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
-
-    const params = {
-      user: {
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password
-      }
-    };
+    const { name, email, password } = this.state;
 
     axios
-      .post("http://localhost:3001/api/v1/signup", params)
+      .post(
+        "http://localhost:3001/api/v1/signup",
+        {
+          user: {
+            name: name,
+            email: email,
+            password: password
+          }
+        },
+        { withCredentials: true }
+      )
       .then((response) => {
-        console.log(response);
+        if (response.data.status === "created") {
+          this.props.handleSuccessfulAuth(response.data);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
+
+    e.preventDefault();
   };
 
   render() {
@@ -44,6 +53,7 @@ class Signup extends React.Component {
             type="text"
             id="name"
             placeholder="ユーザー名"
+            required
             onChange={this.handleChange}
           />
         </div>
@@ -54,6 +64,7 @@ class Signup extends React.Component {
             type="email"
             id="email"
             placeholder="メールアドレス"
+            required
             onChange={this.handleChange}
           />
         </div>
@@ -64,6 +75,7 @@ class Signup extends React.Component {
             type="password"
             id="password"
             placeholder="パスワード"
+            required
             onChange={this.handleChange}
           />
         </div>

@@ -5,17 +5,32 @@ import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
 import Signin from "./components/Auth/Signin";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/signin" component={Signin} />
-      </Switch>
-    </BrowserRouter>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedInStatus: "NOT_LOGGED_IN",
+      user: {}
+    };
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route
+            path="/signup"
+            render={(props) => {
+              <Signup {...props} loggedInStatus={this.state.loggedInStatus} />;
+            }}
+          />
+          <Route path="/signin" component={Signin} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
