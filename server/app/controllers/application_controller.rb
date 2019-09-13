@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  before_action :set_csrf_cookie
-
+  include ActionController::Cookies
+  include ActionController::RequestForgeryProtection
   include Authenticate
+
+  protection_from_forgery with: :exeption
+  before_action :set_csrf_cookie
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
