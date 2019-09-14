@@ -7,13 +7,10 @@ import Signin from "./components/Auth/Signin";
 import axios from "axios";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      loggedInStatus: false,
-      user: {}
-    };
-  }
+  state = {
+    loggedInStatus: false,
+    user: {}
+  };
 
   handleSuccessfulAuth = (data) => {
     this.setState({
