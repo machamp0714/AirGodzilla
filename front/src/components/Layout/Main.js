@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 import { getRooms } from "../../store/actions/roomAction";
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.props.getRooms();
   }

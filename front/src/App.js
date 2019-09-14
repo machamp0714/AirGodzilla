@@ -55,11 +55,12 @@ class App extends React.Component {
   }
 
   render() {
+    const { loggedInStatus } = this.state;
     return (
       <BrowserRouter>
         <Navbar
           handleLogout={this.handleLogout}
-          loggedInStatus={this.state.loggedInStatus}
+          loggedInStatus={loggedInStatus}
         />
         <Switch>
           <Route exact path="/" component={Main} />
@@ -69,7 +70,7 @@ class App extends React.Component {
               <Signup
                 {...props}
                 handleSuccessfulAuth={this.handleSuccessfulAuth}
-                loggedInStatus={this.state.loggedInStatus}
+                loggedInStatus={loggedInStatus}
               />
             )}
           />
@@ -79,7 +80,7 @@ class App extends React.Component {
               <Signin
                 {...props}
                 handleSuccessfulAuth={this.handleSuccessfulAuth}
-                loggedInStatus={this.state.loggedInStatus}
+                loggedInStatus={loggedInStatus}
               />
             )}
           />
