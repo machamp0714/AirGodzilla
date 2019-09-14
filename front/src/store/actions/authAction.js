@@ -26,3 +26,16 @@ export const signup = (newUser) => {
       });
   };
 };
+
+export const signin = (params) => {
+  return (dispatch) => {
+    httpClient
+      .post("http://localhost:3001/api/v1/login", params)
+      .then((response) => {
+        dispatch({ type: "LOGIN_SUCCESS", user: response.data });
+      })
+      .catch((error) => {
+        dispatch({ type: "LOGIN_ERROR", error });
+      });
+  };
+};
