@@ -7,8 +7,8 @@ import Signin from "./components/Auth/Signin";
 import axios from "axios";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       loggedInStatus: false,
       user: {}
@@ -53,7 +53,7 @@ class App extends React.Component {
       });
   };
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.checkLoggedIn();
   }
 
