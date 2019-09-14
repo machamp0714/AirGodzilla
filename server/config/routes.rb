@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get 'listings', to: 'rooms#your_listings'
       post 'signup', to: 'users#create'
       post 'login', to: 'sessions#create'
+      get 'logged_in', to: 'sessions#logged_in'
       post 'add_card', to: 'users#add_card'
     end
   end
