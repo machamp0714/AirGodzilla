@@ -1,27 +1,34 @@
 import React from "react";
-import axios from "axios";
-import RoomList from "../Rooms/RoomList";
 
-export default class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rooms: []
-    };
-  }
+import { connect } from "react-redux";
+import { getRooms } from "../../store/actions/roomAction";
 
+class Main extends React.Component {
   componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/v1/rooms", { withCredentials: true })
-      .then((response) => {
-        this.setState({ rooms: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.props.getRooms();
   }
 
   render = () => {
-    return <RoomList rooms={this.state.rooms} />;
+    console.log(this.props.rooms);
+    return <div>RoomList</div>;
   };
 }
+
+const mapStateToProps = (state) => {
+  return {
+    rooms: state.room.rooms
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRooms: () => {
+      dispatch(getRooms());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);
