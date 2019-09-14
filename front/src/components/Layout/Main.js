@@ -1,7 +1,7 @@
 import React from "react";
-
 import { connect } from "react-redux";
 import { getRooms } from "../../store/actions/roomAction";
+import RoomList from "../Rooms/RoomList";
 
 class Main extends React.Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class Main extends React.Component {
   }
 
   render = () => {
-    return <div>RoomList</div>;
+    const { rooms } = this.props;
+
+    return <RoomList rooms={rooms} />;
   };
 }
 
