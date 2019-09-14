@@ -6,7 +6,7 @@ export const checkLoggedIn = () => {
     axios
       .get("http://localhost:3001/api/v1/is_logged", { withCredentials: true })
       .then((response) => {
-        dispatch({ type: "CHECK_AUTH_SUCCESS", user: response.data });
+        dispatch({ type: "CHECK_AUTH_SUCCESS", response });
       })
       .catch((error) => {
         dispatch({ type: "CHECK_AUTH_ERROR", error });
@@ -27,7 +27,7 @@ export const signup = (newUser) => {
   };
 };
 
-export const signin = (params) => {
+export const login = (params) => {
   return (dispatch) => {
     httpClient
       .post("http://localhost:3001/api/v1/login", params)
@@ -36,6 +36,19 @@ export const signin = (params) => {
       })
       .catch((error) => {
         dispatch({ type: "LOGIN_ERROR", error });
+      });
+  };
+};
+
+export const logout = () => {
+  return (dispatch) => {
+    httpClient
+      .delete("http://localhost:3001/api/v1/logout")
+      .then((response) => {
+        dispatch({ type: "LOGOUT_SUCCESS" });
+      })
+      .catch((error) => {
+        dispatch({ type: "LOGOUT_ERROR", error });
       });
   };
 };
