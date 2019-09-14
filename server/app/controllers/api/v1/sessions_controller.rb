@@ -14,8 +14,8 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(access_token: params[:access_token])
-    user
+    session[:user_id] = nil
+    head :no_content
   end
 
   def is_logged
