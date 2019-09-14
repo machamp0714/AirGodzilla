@@ -32,7 +32,7 @@ export const login = (params) => {
     httpClient
       .post("http://localhost:3001/api/v1/login", params)
       .then((response) => {
-        dispatch({ type: "LOGIN_SUCCESS", user: response.data });
+        dispatch({ type: "LOGIN_SUCCESS", user: response.data.user });
       })
       .catch((error) => {
         dispatch({ type: "LOGIN_ERROR", error });

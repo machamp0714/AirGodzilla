@@ -1,6 +1,7 @@
 import React from "react";
-import httpClient from "../Config/axios";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { login } from "../../store/actions/authAction";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -19,22 +20,10 @@ class Signin extends React.Component {
 
   handleSubmit = (e) => {
     const { email, password } = this.state;
-
-    httpClient
-      .post("http://localhost:3001/api/v1/login", {
-        email: email,
-        password: password
-      })
-      .then((response) => {
-        console.log(response.data);
-        this.props.handleSuccessfulAuth(response.data);
-      })
-      .catch(
-        (error) => {
-          console.log(error);
-        },
-        { withCredentials: true }
-      );
+    this.props.login({
+      email: email,
+      password: password
+    });
     e.preventDefault();
   };
 
@@ -69,4 +58,21 @@ class Signin extends React.Component {
   }
 }
 
-export default Signin;
+const mapStateToProps = (state) => {
+  return {
+    loggedInStatus: state.auth.loggedInStatus
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (params) => {
+      dispatch(login(params));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signin);

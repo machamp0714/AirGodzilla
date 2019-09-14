@@ -33,6 +33,16 @@ const authReducer = (state = initState, action) => {
         loggedInStatus: true,
         user: action.user
       };
+    case "LOGIN_ERROR":
+      console.log("login error", action.error);
+      return state;
+    case "LOGIN_SUCCESS":
+      console.log("login success");
+      return {
+        ...state,
+        loggedInStatus: true,
+        user: action.user
+      };
     case "LOGOUT_ERROR":
       console.log("logout error", action.error);
       return state;
