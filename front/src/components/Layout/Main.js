@@ -4,10 +4,6 @@ import { getRooms } from "../../store/actions/roomAction";
 import RoomList from "../Rooms/RoomList";
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.getRooms();
   }

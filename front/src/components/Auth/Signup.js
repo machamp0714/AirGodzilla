@@ -1,16 +1,14 @@
 import React from "react";
-import httpClient from "../Config/axios";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { signup } from "../../store/actions/authAction";
 
 class Signup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      email: "",
-      password: ""
-    };
-  }
+  state = {
+    name: "",
+    email: "",
+    password: ""
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -20,28 +18,19 @@ class Signup extends React.Component {
 
   handleSubmit = (e) => {
     const { name, email, password } = this.state;
-
-    httpClient
-      .post("http://localhost:3001/api/v1/signup", {
-        user: {
-          name: name,
-          email: email,
-          password: password
-        }
-      })
-      .then((response) => {
-        if (response.status === 201) {
-          this.props.handleSuccessfulAuth(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+    const newUser = {
+      user: {
+        name: name,
+        email: email,
+        password: password
+      }
+    };
+    this.props.signup(newUser);
     e.preventDefault();
   };
 
   render() {
+    console.log(this.props.loggedInStatus);
     if (this.props.loggedInStatus) {
       return <Redirect to="/" />;
     }
@@ -86,4 +75,21 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = (state) => {
+  return {
+    loggedInStatus: state.auth.loggedInStatus
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signup: (user) => {
+      dispatch(signup(user));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signup);
