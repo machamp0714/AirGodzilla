@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const httpClient = axios.create({
-  headers: { "X-CSRF-Token": getCookie("CSRF-TOKEN") },
+  xsrfCookieName: "CSRF_TOKEN",
+  xsrfHeaderName: "X-CSRF-Token",
   withCredentials: true
 });
 

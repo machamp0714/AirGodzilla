@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import httpClient from "../Config/axios";
 
 class Signup extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Signup extends React.Component {
   handleSubmit = (e) => {
     const { name, email, password } = this.state;
 
-    axios
+    httpClient
       .post("http://localhost:3001/api/v1/signup", {
         user: {
           name: name,

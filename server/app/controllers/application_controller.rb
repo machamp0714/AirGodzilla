@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   include ActionController::RequestForgeryProtection
   include Authenticate
 
-  protection_from_forgery with: :exeption
+  protect_from_forgery with: :exception
   before_action :set_csrf_cookie
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
@@ -17,6 +17,6 @@ class ApplicationController < ActionController::API
   end
 
   def set_csrf_cookie
-    cookies[:CSRF_TOKEN] = form_authenticity_token
+    cookies['CSRF_TOKEN'] = form_authenticity_token
   end
 end
