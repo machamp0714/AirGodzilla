@@ -36,7 +36,15 @@ class App extends React.Component {
               />
             )}
           />
-          <Route path="/signin" component={Signin} />
+          <Route
+            path="/signin"
+            render={(props) => (
+              <Signin
+                {...props}
+                handleSuccessfulAuth={this.handleSuccessfulAuth}
+              />
+            )}
+          />
         </Switch>
       </BrowserRouter>
     );

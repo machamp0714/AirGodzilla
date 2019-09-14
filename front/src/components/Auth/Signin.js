@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import httpClient from "../Config/axios";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -19,13 +19,14 @@ class Signin extends React.Component {
   handleSubmit = (e) => {
     const { email, password } = this.state;
 
-    axios
+    httpClient
       .post("http://localhost:3001/api/v1/login", {
         email: email,
         password: password
       })
       .then((response) => {
-        console.log("success");
+        console.log(response.data);
+        this.props.handleSuccessfulAuth(response.data);
       })
       .catch(
         (error) => {
