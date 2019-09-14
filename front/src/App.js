@@ -4,7 +4,7 @@ import Main from "./components/Layout/Main";
 import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
 import Signin from "./components/Auth/Signin";
-import httpClient from "./components/Config/axios";
+import axios from "axios";
 
 class App extends React.Component {
   constructor(props) {
@@ -30,8 +30,8 @@ class App extends React.Component {
   };
 
   checkLoggedIn = () => {
-    httpClient
-      .get("http://localhost:3001/api/v1/is_logged")
+    axios
+      .get("http://localhost:3001/api/v1/is_logged", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in && this.state.loggedInStatus === false) {
           this.setState({

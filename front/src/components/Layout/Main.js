@@ -1,5 +1,5 @@
 import React from "react";
-import httpClient from "../Config/axios";
+import axios from "axios";
 import RoomList from "../Rooms/RoomList";
 
 export default class Main extends React.Component {
@@ -11,8 +11,8 @@ export default class Main extends React.Component {
   }
 
   componentDidMount() {
-    httpClient
-      .get("http://localhost:3001/api/v1/rooms")
+    axios
+      .get("http://localhost:3001/api/v1/rooms", { withCredentials: true })
       .then((response) => {
         this.setState({ rooms: response.data });
       })
