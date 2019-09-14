@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import httpClient from "../Config/axios";
 
 class SignedInLinks extends React.Component {
@@ -18,12 +17,12 @@ class SignedInLinks extends React.Component {
     return (
       <ul className="right">
         <li>
-          <a href="#">Create Room</a>
+          <a href="/">Create Room</a>
         </li>
         <li>
-          <Link to="/logout" onClick={this.handleLogoutClick}>
+          <a href="/" onClick={this.handleLogoutClick}>
             ログアウト
-          </Link>
+          </a>
         </li>
       </ul>
     );

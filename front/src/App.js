@@ -72,6 +72,7 @@ class App extends React.Component {
               <Signup
                 {...props}
                 handleSuccessfulAuth={this.handleSuccessfulAuth}
+                loggedInStatus={this.state.loggedInStatus}
               />
             )}
           />
@@ -81,10 +82,10 @@ class App extends React.Component {
               <Signin
                 {...props}
                 handleSuccessfulAuth={this.handleSuccessfulAuth}
+                loggedInStatus={this.state.loggedInStatus}
               />
             )}
           />
-          <Route path="/logout" />
         </Switch>
       </BrowserRouter>
     );

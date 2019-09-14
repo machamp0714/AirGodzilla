@@ -1,5 +1,6 @@
 import React from "react";
 import httpClient from "../Config/axios";
+import { Redirect } from "react-router-dom";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class Signin extends React.Component {
   };
 
   render() {
+    if (this.props.loggedInStatus) {
+      return <Redirect to="/" />;
+    }
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
