@@ -19,9 +19,11 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def is_logged
-    if session[:user_id]
-      user = User.find_by(id: session[:user_id])
+    user = User.find_by(id: session[:user_id]) if session[:user_id]
+    if user.present?
       render json: { user: user, logged_in: true }, status: :ok
+    else
+      render json: { logged_in: false }, status: :ok
     end
   end
 end
