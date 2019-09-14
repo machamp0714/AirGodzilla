@@ -10,15 +10,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedInStatus: "NOT_LOGGED_IN",
+      loggedInStatus: false,
       user: {}
     };
   }
 
   handleSuccessfulAuth = (data) => {
     this.setState({
-      loggedInStatus: "LOGGED_IN",
+      loggedInStatus: true,
       user: data.user
+    });
+  };
+
+  handleLogout = () => {
+    this.setState({
+      loggedInStatus: false,
+      user: {}
     });
   };
 
@@ -26,20 +33,17 @@ class App extends React.Component {
     httpClient
       .get("http://localhost:3001/api/v1/is_logged")
       .then((response) => {
-        if (
-          response.data.logged_in &&
-          this.state.loggedInStatus === "NOT_LOGGED_IN"
-        ) {
+        if (response.data.logged_in && this.state.loggedInStatus === false) {
           this.setState({
-            loggedInStatus: "LOGGED_IN",
+            loggedInStatus: true,
             user: response.data.user
           });
         } else if (
           !response.data.logged_in &&
-          this.state.loggedInStatus === "LOGGED_IN"
+          this.state.loggedInStatus === true
         ) {
           this.setState({
-            loggedInStatus: "NOT_LOGGED_IN",
+            loggedInStatus: false,
             user: {}
           });
         }
@@ -56,7 +60,10 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Navbar />
+        <Navbar
+          handleLogout={this.handleLogout}
+          loggedInStatus={this.state.loggedInStatus}
+        />
         <Switch>
           <Route exact path="/" component={Main} />
           <Route
@@ -77,6 +84,7 @@ class App extends React.Component {
               />
             )}
           />
+          <Route path="/logout" />
         </Switch>
       </BrowserRouter>
     );
