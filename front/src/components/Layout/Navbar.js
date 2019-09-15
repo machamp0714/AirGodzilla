@@ -5,6 +5,10 @@ import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { checkLoggedIn } from "../../store/actions/authAction";
 
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -14,10 +18,14 @@ class Navbar extends React.Component {
   render() {
     const { loggedInStatus } = this.props;
     return (
-      <nav>
-        <Link to="/">AirGodzilla</Link>
-        {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
-      </nav>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6">
+            <Link to="/">AirGodzilla</Link>
+          </Typography>
+          {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
+        </Toolbar>
+      </AppBar>
     );
   }
 }

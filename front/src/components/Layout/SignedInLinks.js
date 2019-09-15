@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/authAction";
 
+import Button from "@material-ui/core/Button";
+
 class SignedInLinks extends React.Component {
   handleLogoutClick = () => {
     this.props.logout();
@@ -9,14 +11,16 @@ class SignedInLinks extends React.Component {
 
   render() {
     return (
-      <ul className="right">
+      <ul>
         <li>
-          <a href="/">Create Room</a>
+          <Button color="inherit">
+            <a>Create Room</a>
+          </Button>
         </li>
         <li>
-          <a href="/" onClick={this.handleLogoutClick}>
-            ログアウト
-          </a>
+          <Button color="inherit">
+            <a onClick={this.handleLogoutClick}>Logout</a>
+          </Button>
         </li>
       </ul>
     );
