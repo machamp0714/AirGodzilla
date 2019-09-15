@@ -6,10 +6,14 @@ export const checkLoggedIn = () => {
     axios
       .get("http://localhost:3001/api/v1/is_logged", { withCredentials: true })
       .then((response) => {
-        dispatch({ type: "CHECK_AUTH_SUCCESS", response });
+        if (response.data.logged_in) {
+          dispatch({ type: "AUTHORIZED", user: response.data.user });
+        } else {
+          dispatch({ type: "NOT_AUTHORIZED" });
+        }
       })
       .catch((error) => {
-        dispatch({ type: "CHECK_AUTH_ERROR", error });
+        dispatch({ type: "AUTHORIZED_ERROR", error });
       });
   };
 };
