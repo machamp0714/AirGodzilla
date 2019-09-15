@@ -14,12 +14,16 @@ class SignedInLinks extends React.Component {
       <ul>
         <li>
           <Button color="inherit">
-            <a>Create Room</a>
+            <a href="#" className="navlink">
+              Create Room
+            </a>
           </Button>
         </li>
         <li>
           <Button color="inherit">
-            <a onClick={this.handleLogoutClick}>Logout</a>
+            <a href="/" className="navlink" onClick={this.handleLogoutClick}>
+              Logout
+            </a>
           </Button>
         </li>
       </ul>

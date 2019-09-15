@@ -2,6 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signup } from "../../store/actions/authAction";
+import {
+  CssBaseline,
+  Container,
+  Typography,
+  FormGroup,
+  Input,
+  InputLabel,
+  Button
+} from "@material-ui/core";
 
 class Signup extends React.Component {
   state = {
@@ -30,47 +39,39 @@ class Signup extends React.Component {
   };
 
   render() {
-    console.log(this.props.loggedInStatus);
     if (this.props.loggedInStatus) {
       return <Redirect to="/" />;
     }
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">ユーザー名</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="ユーザー名"
-            required
-            onChange={this.handleChange}
-          />
-        </div>
+      <React.Fragment>
+        <CssBaseline />
+        <Container maxWidth="sm">
+          <Typography variant="h4">Sign Up</Typography>
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <InputLabel htmlFor="name">Name</InputLabel>
+              <Input id="name" onChange={this.handleChange} />
+            </FormGroup>
 
-        <div className="form-group">
-          <label htmlFor="email">メールアドレス</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="メールアドレス"
-            required
-            onChange={this.handleChange}
-          />
-        </div>
+            <FormGroup>
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <Input id="email" type="email" onChange={this.handleChange} />
+            </FormGroup>
 
-        <div className="form-group">
-          <label htmlFor="password">パスワード</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="パスワード"
-            required
-            onChange={this.handleChange}
-          />
-        </div>
-
-        <input type="submit" value="送信" />
-      </form>
+            <FormGroup>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                id="password"
+                type="password"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <Button type="submit" color="primary" variant="outlined">
+              submit
+            </Button>
+          </form>
+        </Container>
+      </React.Fragment>
     );
   }
 }

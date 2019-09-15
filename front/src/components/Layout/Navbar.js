@@ -20,8 +20,10 @@ class Navbar extends React.Component {
     return (
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6">
-            <Link to="/">AirGodzilla</Link>
+          <Typography variant="h1" style={{ fontSize: 20 }}>
+            <Link to="/" className="navlink">
+              AirGodzilla
+            </Link>
           </Typography>
           {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
         </Toolbar>
