@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/authAction";
+import { NavLink } from "react-router-dom";
 
 import { withStyles } from "@material-ui/styles";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
@@ -42,6 +43,9 @@ class SignedInLinks extends React.Component {
 
     return (
       <div className={classes.root}>
+        <NavLink className="navlink" to="/room/new">
+          Create Room
+        </NavLink>
         <IconButton
           aria-label="current user"
           aria-controls="menu"
