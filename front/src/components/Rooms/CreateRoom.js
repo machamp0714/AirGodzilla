@@ -43,6 +43,10 @@ class CreateRoom extends React.Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   render() {
     const {
       home_type,
