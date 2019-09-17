@@ -12,6 +12,16 @@ const createRoomFailure = (error) => ({
   error
 });
 
+const editRoomSuccess = (response) => ({
+  type: actionTypes.EDIT_ROOM_SUCCESS,
+  room: response.room
+});
+
+const editRoomFailure = (error) => ({
+  type: actionTypes.EDIT_ROOM_FAILURE,
+  error
+});
+
 export const getRooms = () => {
   return (dispatch) => {
     axios
@@ -34,6 +44,19 @@ export const createRoomRequest = (newRoom) => {
       })
       .catch((error) => {
         dispatch(createRoomFailure(error));
+      });
+  };
+};
+
+export const editRoomRequest = (id) => {
+  return (dispatch) => {
+    axios
+      .get("http://localhost:3001/api/v1/edit_room", id)
+      .then((response) => {
+        dispatch(editRoomSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(editRoomFailure(error));
       });
   };
 };

@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
-      resources :rooms, only: %i[index create show destroy] do
+      resources :rooms do
         resources :photos, only: %i[create destroy]
 
         member do
@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       delete 'logout', to: 'sessions#destroy'
       get 'is_logged', to: 'sessions#is_logged'
       post 'add_card', to: 'users#add_card'
+      get 'edit_room', to: 'rooms#edit'
     end
   end
 end

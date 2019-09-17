@@ -43,6 +43,16 @@ class Api::V1::RoomsController < ApplicationController
     end
   end
 
+  def edit
+    room = Room.find(params[:id])
+
+    if room.present?
+      render json: { room: room, is_success: true }, status: :ok
+    else
+      render json: { is_success: false }, status: 404
+    end
+  end
+
   def destroy
     Room.find(params[:id]).destroy
     head :no_content
