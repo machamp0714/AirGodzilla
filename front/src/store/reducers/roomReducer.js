@@ -40,6 +40,15 @@ const roomReducer = (state = initState, action) => {
         room: action.room,
         isLoading: false
       };
+    case actionTypes.UPDATE_ROOM_FAILURE:
+      console.log(action.error);
+      return state;
+    case actionTypes.UPDATE_ROOM_SUCCESS:
+      console.log("success update", action.room);
+      return {
+        ...state,
+        room: action.room
+      };
     default:
       return state;
   }

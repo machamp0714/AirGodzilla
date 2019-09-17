@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editRoomRequest } from "../../store/actions/roomAction";
+import {
+  editRoomRequest,
+  updateRoomRequest
+} from "../../store/actions/roomAction";
 
 import { TextField, Button } from "@material-ui/core";
 
@@ -23,12 +26,17 @@ class RoomListingName extends React.Component {
   };
 
   handleSubmit = (e) => {
+    const params = {
+      room: {
+        listing_name: this.state.listing_name
+      }
+    };
+    this.props.updateRoom(params, this.props.room.id);
     e.preventDefault();
   };
 
   render() {
     const { isLoading, room } = this.props;
-
     if (isLoading) {
       return null;
     } else {
@@ -60,6 +68,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getRoom: (id) => {
       dispatch(editRoomRequest(id));
+    },
+    updateRoom: (params, room_id) => {
+      dispatch(updateRoomRequest(params, room_id));
     }
   };
 };
