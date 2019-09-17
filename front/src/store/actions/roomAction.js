@@ -26,6 +26,16 @@ const editRoomFailure = (error) => ({
   error
 });
 
+const updateRoomSuccess = (response) => ({
+  type: actionTypes.UPDATE_ROOM_SUCCESS,
+  room: response.room
+});
+
+const updateRoomFailure = (error) => ({
+  type: actionTypes.UPDATE_ROOM_FAILURE,
+  error
+});
+
 export const getRooms = () => {
   return (dispatch) => {
     axios
@@ -66,6 +76,19 @@ export const editRoomRequest = (id) => {
       })
       .catch((error) => {
         dispatch(editRoomFailure(error));
+      });
+  };
+};
+
+export const updateRoomRequest = (params, room_id) => {
+  return (dispatch) => {
+    httpClient
+      .patch("http://localhost:3001/api/v1/rooms/" + room_id, params)
+      .then((response) => {
+        dispatch(updateRoomSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateRoomFailure(error));
       });
   };
 };
