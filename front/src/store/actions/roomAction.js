@@ -51,7 +51,10 @@ export const createRoomRequest = (newRoom) => {
 export const editRoomRequest = (id) => {
   return (dispatch) => {
     axios
-      .get("http://localhost:3001/api/v1/edit_room", id)
+      .get("http://localhost:3001/api/v1/edit_room", {
+        withCredentials: true,
+        params: { id: id }
+      })
       .then((response) => {
         dispatch(editRoomSuccess(response.data));
       })
