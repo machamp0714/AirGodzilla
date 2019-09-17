@@ -12,6 +12,10 @@ const createRoomFailure = (error) => ({
   error
 });
 
+const editRoomFetch = () => ({
+  type: actionTypes.EDIT_ROOM_REQUEST
+});
+
 const editRoomSuccess = (response) => ({
   type: actionTypes.EDIT_ROOM_SUCCESS,
   room: response.room
@@ -50,7 +54,9 @@ export const createRoomRequest = (newRoom) => {
 
 export const editRoomRequest = (id) => {
   return (dispatch) => {
-    axios
+    dispatch(editRoomFetch());
+
+    return axios
       .get("http://localhost:3001/api/v1/edit_room", {
         withCredentials: true,
         params: { id: id }
