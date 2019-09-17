@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { createRoomRequest } from "../../store/actions/roomAction";
 
 import { withStyles } from "@material-ui/styles";
 import {
@@ -44,6 +46,26 @@ class CreateRoom extends React.Component {
   };
 
   handleSubmit = (e) => {
+    const {
+      home_type,
+      room_type,
+      accommodate,
+      bed_room,
+      bath_room,
+      instant
+    } = this.state;
+
+    this.props.createRoom({
+      room: {
+        home_type: home_type,
+        room_type: room_type,
+        accommodate: accommodate,
+        bed_room: bed_room,
+        bath_room: bath_room,
+        instant: instant
+      }
+    });
+
     e.preventDefault();
   };
 
@@ -59,7 +81,7 @@ class CreateRoom extends React.Component {
     const { classes } = this.props;
     return (
       <Container>
-        <form autoComplete="off">
+        <form onSubmit={this.handleSubmit} autoComplete="off">
           <div className={classes.form}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="home_type">Home Type</InputLabel>
@@ -173,4 +195,15 @@ class CreateRoom extends React.Component {
   }
 }
 
-export default withStyles(styles)(CreateRoom);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createRoom: (newRoom) => {
+      dispatch(createRoomRequest(newRoom));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles)(CreateRoom));

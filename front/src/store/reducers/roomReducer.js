@@ -15,8 +15,10 @@ const roomReducer = (state = initState, action) => {
         rooms: action.rooms
       };
     case actionTypes.CREATE_ROOM_FAILURE:
+      console.log(action.error);
       return state;
     case actionTypes.CREATE_ROOM_SUCCESS:
+      console.log(action.room);
       return {
         ...state,
         room: action.room

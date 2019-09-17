@@ -8,11 +8,11 @@ class Api::V1::RoomsController < ApplicationController
   end
 
   def create
-    @room = current_user.rooms.build(room_params)
+    room = current_user.rooms.build(room_params)
     if @room.save
-      render json: @room, status: :ok
+      render json: { room: room }, status: :created
     else
-      render json: { error: @room.errors, is_success: false }, status: 422
+      render json: { error: room.errors, is_success: false }, status: 422
     end
   end
 
