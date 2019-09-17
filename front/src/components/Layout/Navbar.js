@@ -5,28 +5,34 @@ import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { checkLoggedIn } from "../../store/actions/authAction";
 
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/styles";
+import { AppBar, Container, Typography } from "@material-ui/core";
+
+const styles = {
+  root: {
+    display: "flex",
+    position: "relative",
+    alignItems: "center"
+  }
+};
 
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
+  UNSAFE_componentWillMount() {
     this.props.checkLoggedIn();
   }
 
   render() {
-    const { loggedInStatus } = this.props;
+    const { loggedInStatus, classes } = this.props;
     return (
       <AppBar position="static">
-        <Toolbar>
+        <Container className={classes.root}>
           <Typography variant="h1" style={{ fontSize: 20 }}>
             <Link to="/" className="navlink">
               AirGodzilla
             </Link>
           </Typography>
           {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
-        </Toolbar>
+        </Container>
       </AppBar>
     );
   }
@@ -50,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Navbar);
+)(withStyles(styles)(Navbar));
