@@ -1,7 +1,8 @@
 import * as actionTypes from "../../utils/actionTypes";
 
 const initState = {
-  rooms: []
+  rooms: [],
+  room: {}
 };
 
 const roomReducer = (state = initState, action) => {
@@ -18,7 +19,6 @@ const roomReducer = (state = initState, action) => {
       console.log(action.error);
       return state;
     case actionTypes.CREATE_ROOM_SUCCESS:
-      console.log(action.room);
       return {
         ...state,
         room: action.room
