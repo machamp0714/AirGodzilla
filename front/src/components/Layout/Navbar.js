@@ -22,25 +22,31 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { loggedInStatus, classes } = this.props;
-    return (
-      <AppBar position="static">
-        <Container className={classes.root}>
-          <Typography variant="h1" style={{ fontSize: 20 }}>
-            <Link to="/" className="navlink">
-              AirGodzilla
-            </Link>
-          </Typography>
-          {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
-        </Container>
-      </AppBar>
-    );
+    const { loggedInStatus, isLoading, classes } = this.props;
+
+    if (isLoading) {
+      return null;
+    } else {
+      return (
+        <AppBar position="static">
+          <Container className={classes.root}>
+            <Typography variant="h1" style={{ fontSize: 20 }}>
+              <Link to="/" className="navlink">
+                AirGodzilla
+              </Link>
+            </Typography>
+            {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
+          </Container>
+        </AppBar>
+      );
+    }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     loggedInStatus: state.auth.loggedInStatus,
+    isLoading: state.auth.isLoading,
     user: state.auth.user
   };
 };

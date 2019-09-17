@@ -1,19 +1,25 @@
 import httpClient from "../../components/Config/axios";
 import axios from "axios";
+import * as actionTypes from "../../utils/actionTypes";
+
+const checkLoggedInRequest = () => ({
+  type: actionTypes.AUTHORIZED_REQUEST
+});
 
 export const checkLoggedIn = () => {
   return (dispatch) => {
+    dispatch(checkLoggedInRequest());
     axios
       .get("http://localhost:3001/api/v1/is_logged", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
-          dispatch({ type: "AUTHORIZED", user: response.data.user });
+          dispatch({ type: actionTypes.AUTHORIZED, user: response.data.user });
         } else {
-          dispatch({ type: "NOT_AUTHORIZED" });
+          dispatch({ type: actionTypes.NOT_AUTHORIZED });
         }
       })
       .catch((error) => {
-        dispatch({ type: "AUTHORIZED_ERROR", error });
+        dispatch({ type: actionTypes.AUTHORIZED_ERROR, error });
       });
   };
 };

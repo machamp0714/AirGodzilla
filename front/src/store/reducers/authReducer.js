@@ -1,25 +1,42 @@
+import * as actionTypes from "../../utils/actionTypes";
+
 const initState = {
   loggedInStatus: false,
+  isLoading: false,
   user: {}
 };
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    case "AUTHORIZED_ERROR":
+    case actionTypes.AUTHORIZED_REQUEST:
+      return {
+        ...state,
+        loggedInStatus: false,
+        isLoading: true,
+        user: {}
+      };
+    case actionTypes.AUTHORIZED_ERROR:
       console.log("check error", action.error);
-      return state;
-    case "AUTHORIZED":
+      return {
+        ...state,
+        loggedInStatus: false,
+        isLoading: false,
+        user: {}
+      };
+    case actionTypes.AUTHORIZED:
       console.log("authorized!");
       return {
         ...state,
         loggedInStatus: true,
+        isLoading: false,
         user: action.user
       };
-    case "NOT_AUTHORIZED":
+    case actionTypes.NOT_AUTHORIZED:
       console.log("not authorized");
       return {
         ...state,
         loggedInStatus: false,
+        isLoading: false,
         user: {}
       };
     case "SIGN_UP_ERROR":
