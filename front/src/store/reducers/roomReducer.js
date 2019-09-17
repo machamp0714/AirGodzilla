@@ -6,10 +6,10 @@ const initState = {
 
 const roomReducer = (state = initState, action) => {
   switch (action.type) {
-    case "GET_ROOMS_ERROR":
+    case actionTypes.GET_ROOMS_FAILURE:
       console.log(action.error);
       return state;
-    case "GET_ROOMS_SUCCESS":
+    case actionTypes.GET_ROOMS_SUCCESS:
       return {
         ...state,
         rooms: action.rooms

@@ -1,3 +1,7 @@
-// Room
+// Create Room
 export const CREATE_ROOM_SUCCESS = "CREATE_ROOM_SUCCESS";
 export const CREATE_ROOM_FAILURE = "CREATE_ROOM_FAILURE";
+
+// Get Rooms
+export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
+export const GET_ROOMS_FAILURE = "GET_ROOMS_FAILURE";
