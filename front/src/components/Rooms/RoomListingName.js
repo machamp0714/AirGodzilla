@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import {
   editRoomRequest,
   updateRoomRequest
@@ -36,23 +37,28 @@ class RoomListingName extends React.Component {
   };
 
   render() {
-    const { isLoading, room } = this.props;
+    const { isLoading, room, user } = this.props;
+
     if (isLoading) {
       return null;
     } else {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <TextField
-            id="listing_name"
-            label="Listing Name"
-            defaultValue={room.listing_name}
-            onChange={this.handleChange}
-          />
-          <Button type="submit" variant="outlined">
-            更新
-          </Button>
-        </form>
-      );
+      if (user.id !== room.user_id) {
+        return <Redirect to="/" />;
+      } else {
+        return (
+          <form onSubmit={this.handleSubmit}>
+            <TextField
+              id="listing_name"
+              label="Listing Name"
+              defaultValue={room.listing_name}
+              onChange={this.handleChange}
+            />
+            <Button type="submit" variant="outlined">
+              更新
+            </Button>
+          </form>
+        );
+      }
     }
   }
 }
@@ -60,7 +66,8 @@ class RoomListingName extends React.Component {
 const mapStateToProps = (state) => {
   return {
     room: state.room.room,
-    isLoading: state.room.isLoading
+    isLoading: state.room.isLoading,
+    user: state.auth.user
   };
 };
 
