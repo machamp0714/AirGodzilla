@@ -1,8 +1,12 @@
 // Auth
 export const AUTHORIZED_REQUEST = "AUTHORIZED_REQUEST";
-export const AUTHORIZED = "AUTHORIZED";
+export const AUTHORIZED_SUCCESS = "AUTHORIZED";
 export const NOT_AUTHORIZED = "NOT_AUTHORIZED";
 export const AUTHORIZED_ERROR = "AUTHORIZED_ERROR";
+
+// Signup
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNUP_ERROR = "SIGNUP_ERROR";
 
 // Create Room
 export const CREATE_ROOM_SUCCESS = "CREATE_ROOM_SUCCESS";

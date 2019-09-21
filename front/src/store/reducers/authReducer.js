@@ -1,4 +1,11 @@
-import * as actionTypes from "../../utils/actionTypes";
+import {
+  AUTHORIZED_REQUEST,
+  AUTHORIZED_SUCCESS,
+  AUTHORIZED_ERROR,
+  NOT_AUTHORIZED,
+  SIGNUP_SUCCESS,
+  SIGNUP_ERROR
+} from "../../utils/actionTypes";
 
 const initState = {
   loggedInStatus: false,
@@ -8,14 +15,14 @@ const initState = {
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.AUTHORIZED_REQUEST:
+    case AUTHORIZED_REQUEST:
       return {
         ...state,
         loggedInStatus: false,
         isLoading: true,
         user: {}
       };
-    case actionTypes.AUTHORIZED_ERROR:
+    case AUTHORIZED_ERROR:
       console.log("check error", action.error);
       return {
         ...state,
@@ -23,7 +30,7 @@ const authReducer = (state = initState, action) => {
         isLoading: false,
         user: {}
       };
-    case actionTypes.AUTHORIZED:
+    case AUTHORIZED_SUCCESS:
       console.log("authorized!");
       return {
         ...state,
@@ -31,7 +38,7 @@ const authReducer = (state = initState, action) => {
         isLoading: false,
         user: action.user
       };
-    case actionTypes.NOT_AUTHORIZED:
+    case NOT_AUTHORIZED:
       console.log("not authorized");
       return {
         ...state,
@@ -39,10 +46,10 @@ const authReducer = (state = initState, action) => {
         isLoading: false,
         user: {}
       };
-    case "SIGN_UP_ERROR":
+    case SIGNUP_ERROR:
       console.log("sign up error", action.error);
       return state;
-    case "SIGN_UP_SUCCESS":
+    case SIGNUP_SUCCESS:
       console.log("sign up success");
       return {
         ...state,

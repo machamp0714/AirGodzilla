@@ -1,25 +1,56 @@
 import httpClient from "../../components/Config/axios";
 import axios from "axios";
-import * as actionTypes from "../../utils/actionTypes";
+import {
+  AUTHORIZED_REQUEST,
+  AUTHORIZED_SUCCESS,
+  AUTHORIZED_ERROR,
+  NOT_AUTHORIZED,
+  SIGNUP_SUCCESS,
+  SIGNUP_ERROR
+} from "../../utils/actionTypes";
 
-const checkLoggedInRequest = () => ({
-  type: actionTypes.AUTHORIZED_REQUEST
+const loggedInRequest = () => ({
+  type: AUTHORIZED_REQUEST
 });
 
-export const checkLoggedIn = () => {
+const loggedInSuccess = (user) => ({
+  type: AUTHORIZED_SUCCESS,
+  user: user
+});
+
+const notLoggedIn = () => ({
+  type: NOT_AUTHORIZED
+});
+
+const loggedInError = (error) => ({
+  type: AUTHORIZED_ERROR,
+  error
+});
+
+const signupSuccess = (newUser) => ({
+  type: SIGNUP_SUCCESS,
+  user: newUser
+});
+
+const signupError = (error) => ({
+  type: SIGNUP_ERROR,
+  error
+});
+
+export const loggedIn = () => {
   return (dispatch) => {
-    dispatch(checkLoggedInRequest());
+    dispatch(loggedInRequest());
     axios
       .get("http://localhost:3001/api/v1/is_logged", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
-          dispatch({ type: actionTypes.AUTHORIZED, user: response.data.user });
+          dispatch(loggedInSuccess(response.data.user));
         } else {
-          dispatch({ type: actionTypes.NOT_AUTHORIZED });
+          dispatch(notLoggedIn());
         }
       })
       .catch((error) => {
-        dispatch({ type: actionTypes.AUTHORIZED_ERROR, error });
+        dispatch(loggedInError(error));
       });
   };
 };
@@ -29,10 +60,10 @@ export const signup = (newUser) => {
     httpClient
       .post("http://localhost:3001/api/v1/signup", newUser)
       .then((response) => {
-        dispatch({ type: "SIGN_UP_SUCCESS", user: response.data });
+        dispatch(signupSuccess(response.data.user));
       })
       .catch((error) => {
-        dispatch({ type: "SIGN_UP_ERROR", error });
+        dispatch(signupError(error));
       });
   };
 };

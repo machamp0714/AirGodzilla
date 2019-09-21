@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
-import { checkLoggedIn } from "../../store/actions/authAction";
+import { loggedIn } from "../../store/actions/authAction";
 
 import { withStyles } from "@material-ui/styles";
 import { AppBar, Container, Typography } from "@material-ui/core";
@@ -18,7 +18,7 @@ const styles = {
 
 class Navbar extends React.Component {
   UNSAFE_componentWillMount() {
-    this.props.checkLoggedIn();
+    this.props.loggedIn();
   }
 
   render() {
@@ -53,8 +53,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    checkLoggedIn: () => {
-      dispatch(checkLoggedIn());
+    loggedIn: () => {
+      dispatch(loggedIn());
     }
   };
 };
