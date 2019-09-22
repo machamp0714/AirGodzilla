@@ -38,7 +38,12 @@ class RoomListingName extends React.Component {
       return null;
     } else {
       if (user.id !== room.user_id) {
-        return <Redirect to="/" />;
+        return (
+          // Redirect先のComponentにおいてthis.props.location.state.messageでアクセスできる。
+          <Redirect
+            to={{ pathname: "/", state: { message: "please login" } }}
+          />
+        );
       } else {
         return (
           <div className="container">
