@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getRoom, updateRoomRequest } from "../../store/actions/roomAction";
+import { Redirect } from "react-router-dom";
 
 class RoomListingName extends React.Component {
   constructor(props) {
@@ -31,28 +32,39 @@ class RoomListingName extends React.Component {
   };
 
   render() {
-    return (
-      <div className="container">
-        <h2>Listing Name</h2>
+    const { isFetching, user, room } = this.props;
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            id="listing_name"
-            type="text"
-            placeholder="listing name"
-            onChange={this.handleChange}
-          />
-          <input type="submit" value="update" />
-        </form>
-      </div>
-    );
+    if (isFetching) {
+      return null;
+    } else {
+      if (user.id !== room.user_id) {
+        return <Redirect to="/" />;
+      } else {
+        return (
+          <div className="container">
+            <h2>Listing Name</h2>
+
+            <form onSubmit={this.handleSubmit}>
+              <input
+                id="listing_name"
+                type="text"
+                placeholder="listing name"
+                onChange={this.handleChange}
+              />
+              <input type="submit" value="update" />
+            </form>
+          </div>
+        );
+      }
+    }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.room.isLoading,
-    room: state.room.room
+    isFetching: state.room.isFetching,
+    room: state.room.room,
+    user: state.auth.user
   };
 };
 

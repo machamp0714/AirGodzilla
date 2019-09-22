@@ -13,7 +13,7 @@ import {
 const initState = {
   rooms: [],
   room: {},
-  isLoading: false
+  isFetching: false
 };
 
 const roomReducer = (state = initState, action) => {
@@ -44,19 +44,19 @@ const roomReducer = (state = initState, action) => {
     case GET_ROOM_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        isFetching: true,
         room: {}
       };
     case GET_ROOM_FAILURE:
       return {
         ...state,
-        isLoading: false,
+        isFetching: false,
         error: action.error
       };
     case GET_ROOM_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isFetching: false,
         room: action.room
       };
     default:
