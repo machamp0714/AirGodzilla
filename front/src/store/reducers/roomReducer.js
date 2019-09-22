@@ -1,4 +1,14 @@
-import * as actionTypes from "../../utils/actionTypes";
+import {
+  CREATE_ROOM_FAILURE,
+  CREATE_ROOM_SUCCESS,
+  UPDATE_ROOM_FAILURE,
+  UPDATE_ROOM_SUCCESS,
+  GET_ROOMS_FAILURE,
+  GET_ROOMS_SUCCESS,
+  GET_ROOM_REQUEST,
+  GET_ROOM_FAILURE,
+  GET_ROOM_SUCCESS
+} from "../../utils/actionTypes";
 
 const initState = {
   rooms: [],
@@ -8,45 +18,45 @@ const initState = {
 
 const roomReducer = (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.GET_ROOMS_FAILURE:
+    case GET_ROOMS_FAILURE:
       return state;
-    case actionTypes.GET_ROOMS_SUCCESS:
+    case GET_ROOMS_SUCCESS:
       return {
         ...state,
         rooms: action.rooms
       };
-    case actionTypes.CREATE_ROOM_FAILURE:
+    case CREATE_ROOM_FAILURE:
       return state;
-    case actionTypes.CREATE_ROOM_SUCCESS:
+    case CREATE_ROOM_SUCCESS:
       return {
         ...state,
         room: action.room
       };
-    case actionTypes.EDIT_ROOM_REQUEST:
-      return {
-        ...state,
-        room: {},
-        isLoading: true
-      };
-    case actionTypes.EDIT_ROOM_FAILURE:
-      return {
-        ...state,
-        room: {},
-        isLoading: false
-      };
-    case actionTypes.EDIT_ROOM_SUCCESS:
-      return {
-        ...state,
-        room: action.room,
-        isLoading: false
-      };
-    case actionTypes.UPDATE_ROOM_FAILURE:
+    case UPDATE_ROOM_FAILURE:
       console.log(action.error);
       return state;
-    case actionTypes.UPDATE_ROOM_SUCCESS:
+    case UPDATE_ROOM_SUCCESS:
       console.log("success update", action.room);
       return {
         ...state,
+        room: action.room
+      };
+    case GET_ROOM_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        room: {}
+      };
+    case GET_ROOM_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error
+      };
+    case GET_ROOM_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
         room: action.room
       };
     default:

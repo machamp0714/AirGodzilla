@@ -81,7 +81,9 @@ class CreateRoom extends React.Component {
     } = this.state;
     const { classes, room } = this.props;
 
-    if (Object.keys(room).length === 0) {
+    if (Object.keys(room).length !== 0) {
+      return <Redirect to={"/room/" + room.id + "/listig_name"} />;
+    } else {
       return (
         <Container>
           <form onSubmit={this.handleSubmit} autoComplete="off">
@@ -195,8 +197,6 @@ class CreateRoom extends React.Component {
           </form>
         </Container>
       );
-    } else {
-      return <Redirect to={"/room/" + room.id + "/edit"} />;
     }
   }
 }

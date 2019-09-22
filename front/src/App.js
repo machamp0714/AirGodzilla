@@ -5,7 +5,7 @@ import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
 import Signin from "./components/Auth/Signin";
 import CreateRoom from "./components/Rooms/CreateRoom";
-import UserOnly from "./components/Auth/UserOnly";
+import RoomListingName from "./components/Rooms/RoomListingName";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
         <Route path="/room/new" component={CreateRoom} />
-        <Route path="/useronly" component={UserOnly} />
+        <Route path="/room/:id/listing_name" component={RoomListingName} />
       </Switch>
     </BrowserRouter>
   );

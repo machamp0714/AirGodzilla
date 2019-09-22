@@ -43,16 +43,6 @@ class Api::V1::RoomsController < ApplicationController
     end
   end
 
-  def edit
-    room = Room.find(params[:id])
-
-    if room.present?
-      render json: { room: room, is_success: true }, status: :ok
-    else
-      render json: { is_success: false }, status: 404
-    end
-  end
-
   def update
     room = Room.find(params[:id])
 
@@ -74,6 +64,16 @@ class Api::V1::RoomsController < ApplicationController
       rooms: rooms.map { |r| r.attributes.merge(image: r.cover_photo, instant: r.instant != 'Request') },
       is_success: true
     }, status: :ok
+  end
+
+  def your_room
+    room = Room.find(params[:id])
+
+    if room.present?
+      render json: { room: room, is_success: true }, status: :ok
+    else
+      render json: { is_success: false }, status: 404
+    end
   end
 
   private

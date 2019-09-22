@@ -1,38 +1,48 @@
 import axios from "axios";
 import httpClient from "../../components/Config/axios";
-import * as actionTypes from "../../utils/actionTypes";
+import {
+  CREATE_ROOM_FAILURE,
+  CREATE_ROOM_SUCCESS,
+  UPDATE_ROOM_FAILURE,
+  UPDATE_ROOM_SUCCESS,
+  GET_ROOMS_FAILURE,
+  GET_ROOMS_SUCCESS,
+  GET_ROOM_REQUEST,
+  GET_ROOM_FAILURE,
+  GET_ROOM_SUCCESS
+} from "../../utils/actionTypes";
+
+const getRoomRequest = () => ({
+  type: GET_ROOM_REQUEST
+});
+
+const getRoomSuccess = (room) => ({
+  type: GET_ROOM_SUCCESS,
+  room: room
+});
+
+const getRoomFailure = (error) => ({
+  type: GET_ROOM_FAILURE,
+  error
+});
 
 const createRoomSuccess = (response) => ({
-  type: actionTypes.CREATE_ROOM_SUCCESS,
+  type: CREATE_ROOM_SUCCESS,
   room: response.room
 });
 
 const createRoomFailure = (error) => ({
-  type: actionTypes.CREATE_ROOM_FAILURE,
-  error
-});
-
-const editRoomFetch = () => ({
-  type: actionTypes.EDIT_ROOM_REQUEST
-});
-
-const editRoomSuccess = (response) => ({
-  type: actionTypes.EDIT_ROOM_SUCCESS,
-  room: response.room
-});
-
-const editRoomFailure = (error) => ({
-  type: actionTypes.EDIT_ROOM_FAILURE,
+  type: CREATE_ROOM_FAILURE,
   error
 });
 
 const updateRoomSuccess = (response) => ({
-  type: actionTypes.UPDATE_ROOM_SUCCESS,
+  type: UPDATE_ROOM_SUCCESS,
   room: response.room
 });
 
 const updateRoomFailure = (error) => ({
-  type: actionTypes.UPDATE_ROOM_FAILURE,
+  type: UPDATE_ROOM_FAILURE,
   error
 });
 
@@ -41,10 +51,10 @@ export const getRooms = () => {
     axios
       .get("http://localhost:3001/api/v1/rooms", { withCredentials: true })
       .then((response) => {
-        dispatch({ type: actionTypes.GET_ROOMS_SUCCESS, rooms: response.data });
+        dispatch({ type: GET_ROOMS_SUCCESS, rooms: response.data });
       })
       .catch((error) => {
-        dispatch({ type: actionTypes.GET_ROOMS_FAILURE, error });
+        dispatch({ type: GET_ROOMS_FAILURE, error });
       });
   };
 };
@@ -62,24 +72,6 @@ export const createRoomRequest = (newRoom) => {
   };
 };
 
-export const editRoomRequest = (id) => {
-  return (dispatch) => {
-    dispatch(editRoomFetch());
-
-    return axios
-      .get("http://localhost:3001/api/v1/edit_room", {
-        withCredentials: true,
-        params: { id: id }
-      })
-      .then((response) => {
-        dispatch(editRoomSuccess(response.data));
-      })
-      .catch((error) => {
-        dispatch(editRoomFailure(error));
-      });
-  };
-};
-
 export const updateRoomRequest = (params, room_id) => {
   return (dispatch) => {
     httpClient
@@ -89,6 +81,22 @@ export const updateRoomRequest = (params, room_id) => {
       })
       .catch((error) => {
         dispatch(updateRoomFailure(error));
+      });
+  };
+};
+
+export const getRoom = (room_id) => {
+  return (dispatch) => {
+    dispatch(getRoomRequest());
+    axios
+      .get("http://localhost:3001/api/v1/your_room/" + room_id, {
+        withCredentials: true
+      })
+      .then((response) => {
+        dispatch(getRoomSuccess(response.data.room));
+      })
+      .catch((error) => {
+        dispatch(getRoomFailure(error));
       });
   };
 };

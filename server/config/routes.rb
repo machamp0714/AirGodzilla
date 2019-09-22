@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       delete 'logout', to: 'sessions#destroy'
       get 'is_logged', to: 'sessions#is_logged'
       post 'add_card', to: 'users#add_card'
-      get 'edit_room', to: 'rooms#edit'
+      get 'your_room/:id', to: 'rooms#your_room'
     end
   end
 end
