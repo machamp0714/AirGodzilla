@@ -4,7 +4,11 @@ import {
   AUTHORIZED_ERROR,
   NOT_AUTHORIZED,
   SIGNUP_SUCCESS,
-  SIGNUP_ERROR
+  SIGNUP_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERROR
 } from "../../utils/actionTypes";
 
 const initState = {
@@ -56,20 +60,20 @@ const authReducer = (state = initState, action) => {
         loggedInStatus: true,
         user: action.user
       };
-    case "LOGIN_ERROR":
+    case LOGIN_ERROR:
       console.log("login error", action.error);
       return state;
-    case "LOGIN_SUCCESS":
+    case LOGIN_SUCCESS:
       console.log("login success", action.user);
       return {
         ...state,
         loggedInStatus: true,
         user: action.user
       };
-    case "LOGOUT_ERROR":
+    case LOGOUT_ERROR:
       console.log("logout error", action.error);
       return state;
-    case "LOGOUT_SUCCESS":
+    case LOGOUT_SUCCESS:
       console.log("logout success");
       return {
         ...state,

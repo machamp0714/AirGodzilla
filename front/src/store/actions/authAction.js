@@ -6,7 +6,11 @@ import {
   AUTHORIZED_ERROR,
   NOT_AUTHORIZED,
   SIGNUP_SUCCESS,
-  SIGNUP_ERROR
+  SIGNUP_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERROR
 } from "../../utils/actionTypes";
 
 const loggedInRequest = () => ({
@@ -34,6 +38,25 @@ const signupSuccess = (newUser) => ({
 
 const signupError = (error) => ({
   type: SIGNUP_ERROR,
+  error
+});
+
+const loginSuccess = (user) => ({
+  type: LOGIN_SUCCESS,
+  user: user
+});
+
+const loginError = (error) => ({
+  type: LOGIN_ERROR,
+  error
+});
+
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS
+});
+
+const logoutError = (error) => ({
+  type: LOGOUT_ERROR,
   error
 });
 
@@ -73,10 +96,10 @@ export const login = (params) => {
     httpClient
       .post("http://localhost:3001/api/v1/login", params)
       .then((response) => {
-        dispatch({ type: "LOGIN_SUCCESS", user: response.data.user });
+        dispatch(loginSuccess(response.data.user));
       })
       .catch((error) => {
-        dispatch({ type: "LOGIN_ERROR", error });
+        dispatch(loginError(error));
       });
   };
 };
@@ -86,10 +109,10 @@ export const logout = () => {
     httpClient
       .delete("http://localhost:3001/api/v1/logout")
       .then((response) => {
-        dispatch({ type: "LOGOUT_SUCCESS" });
+        dispatch(logoutSuccess());
       })
       .catch((error) => {
-        dispatch({ type: "LOGOUT_ERROR", error });
+        dispatch(logoutError(error));
       });
   };
 };
