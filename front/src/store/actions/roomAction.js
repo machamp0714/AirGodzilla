@@ -36,9 +36,9 @@ const createRoomFailure = (error) => ({
   error
 });
 
-const updateRoomSuccess = (response) => ({
+const updateRoomSuccess = (room) => ({
   type: UPDATE_ROOM_SUCCESS,
-  room: response.room
+  room: room
 });
 
 const updateRoomFailure = (error) => ({
@@ -77,7 +77,7 @@ export const updateRoomRequest = (params, room_id) => {
     httpClient
       .patch("http://localhost:3001/api/v1/rooms/" + room_id, params)
       .then((response) => {
-        dispatch(updateRoomSuccess(response.data));
+        dispatch(updateRoomSuccess(response.data.room));
       })
       .catch((error) => {
         dispatch(updateRoomFailure(error));

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getRoom } from "../../store/actions/roomAction";
+import { getRoom, updateRoomRequest } from "../../store/actions/roomAction";
 
 class RoomListingName extends React.Component {
   constructor(props) {
@@ -14,17 +14,33 @@ class RoomListingName extends React.Component {
     this.props.getRoom(this.props.match.params.id);
   }
 
+  handleChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    const params = {
+      room: {
+        listing_name: this.state.listing_name
+      }
+    };
+    const room_id = this.props.match.params.id;
+
+    this.props.updateRoomRequest(params, room_id);
+    e.preventDefault();
+  };
+
   render() {
     return (
       <div className="container">
         <h2>Listing Name</h2>
 
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input
             id="listing_name"
             type="text"
             placeholder="listing name"
-            value={this.state.listing_name}
+            onChange={this.handleChange}
           />
           <input type="submit" value="update" />
         </form>
@@ -40,10 +56,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispach) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getRoom: (room_id) => {
-      dispach(getRoom(room_id));
+      dispatch(getRoom(room_id));
+    },
+    updateRoomRequest: (params, room_id) => {
+      dispatch(updateRoomRequest(params, room_id));
     }
   };
 };
