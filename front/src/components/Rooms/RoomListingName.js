@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getRoom, updateRoomRequest } from "../../store/actions/roomAction";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class RoomListingName extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class RoomListingName extends React.Component {
         listing_name: this.state.listing_name
       }
     };
-    const room_id = this.props.match.params.id;
+    const room_id = this.props.room.id;
 
     this.props.updateRoomRequest(params, room_id);
     e.preventDefault();
@@ -47,17 +47,23 @@ class RoomListingName extends React.Component {
       } else {
         return (
           <div className="container">
-            <h2>Listing Name</h2>
+            <div className="left-column">
+              <Link to={"/room/" + room.id + "/photo"}>Photo</Link>
+            </div>
 
-            <form onSubmit={this.handleSubmit}>
-              <input
-                id="listing_name"
-                type="text"
-                placeholder="listing name"
-                onChange={this.handleChange}
-              />
-              <input type="submit" value="update" />
-            </form>
+            <div className="right-column">
+              <h2>Listing Name</h2>
+
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  id="listing_name"
+                  type="text"
+                  placeholder="listing name"
+                  onChange={this.handleChange}
+                />
+                <input type="submit" value="update" />
+              </form>
+            </div>
           </div>
         );
       }
