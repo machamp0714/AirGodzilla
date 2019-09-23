@@ -17,13 +17,18 @@ class RoomPhoto extends React.Component {
     this.props.getRoom(this.props.match.params.id);
   }
 
+  componentDidMount() {
+    this.props.getRoom(this.props.match.params.id);
+  }
+
   handleChange = (e) => {
     let files = e.target.files; // FileListオブジェクト
+    // ユーザのコンピュータ内のファイルを非同期に読み込む
     let reader = new FileReader();
     // 画像をbase64にエンコードする
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
-      this.setState({ image: reader.result });
+      this.setState({ image: reader.result }); // 読み込んだファイルの内容
     };
   };
 
@@ -61,12 +66,7 @@ class RoomPhoto extends React.Component {
             <div className="right-column">
               <h2>Photo</h2>
               <form onSubmit={this.handleSubmit}>
-                <input
-                  id="photo"
-                  type="file"
-                  accept="image/*"
-                  onChange={this.handleChange}
-                />
+                <input id="photo" type="file" onChange={this.handleChange} />
                 <input type="submit" value="update" />
               </form>
 
