@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getRoom } from "../../store/actions/roomAction";
 import { createPhoto } from "../../store/actions/photoAction";
 import { Link, Redirect } from "react-router-dom";
+import PhotoList from "../Photos/PhotoList";
 
 class RoomPhoto extends React.Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class RoomPhoto extends React.Component {
                 <input type="submit" value="update" />
               </form>
 
-              <img src={room.photos[0].image} alt="Room Photos" />
+              <PhotoList photos={room.photos} />
             </div>
           </div>
         );
