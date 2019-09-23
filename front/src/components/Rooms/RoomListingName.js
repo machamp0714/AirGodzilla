@@ -41,7 +41,7 @@ class RoomListingName extends React.Component {
         return (
           // Redirect先のComponentにおいてthis.props.location.state.messageでアクセスできる。
           <Redirect
-            to={{ pathname: "/", state: { message: "please login" } }}
+            to={{ pathname: "/", state: { message: "Not Permission!" } }}
           />
         );
       } else {

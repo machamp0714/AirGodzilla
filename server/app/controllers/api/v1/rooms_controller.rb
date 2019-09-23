@@ -70,7 +70,8 @@ class Api::V1::RoomsController < ApplicationController
     room = Room.find(params[:id])
 
     if room.present?
-      render json: { room: room, is_success: true }, status: :ok
+      room_serializer = RoomSerializer.new(room)
+      render json: { room: room_serializer, is_success: true }, status: :ok
     else
       render json: { is_success: false }, status: 404
     end

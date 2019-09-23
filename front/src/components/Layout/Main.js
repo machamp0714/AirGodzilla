@@ -10,7 +10,6 @@ class Main extends React.Component {
 
   render = () => {
     const { rooms } = this.props;
-
     return <RoomList rooms={rooms} />;
   };
 }

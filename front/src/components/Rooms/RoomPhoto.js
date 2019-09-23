@@ -17,7 +17,13 @@ class RoomPhoto extends React.Component {
   }
 
   handleChange = (e) => {
-    this.setState({ image: e.target.value });
+    let files = e.target.files; // FileListオブジェクト
+    let reader = new FileReader();
+    // 画像をbase64にエンコードする
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.setState({ image: reader.result });
+    };
   };
 
   handleSubmit = (e) => {
@@ -34,7 +40,6 @@ class RoomPhoto extends React.Component {
 
   render() {
     const { isFetching, user, room } = this.props;
-
     if (isFetching) {
       return null;
     } else {
@@ -42,10 +47,10 @@ class RoomPhoto extends React.Component {
         return (
           // Redirect先のComponentにおいてthis.props.location.state.messageでアクセスできる。
           <Redirect
-            to={{ pathname: "/", state: { message: "please login" } }}
+            to={{ pathname: "/", state: { message: "Not Permission" } }}
           />
         );
-      } else {
+      } else if (room.photos !== undefined) {
         return (
           <div className="container">
             <div className="left-column">
@@ -54,7 +59,6 @@ class RoomPhoto extends React.Component {
 
             <div className="right-column">
               <h2>Photo</h2>
-
               <form onSubmit={this.handleSubmit}>
                 <input
                   id="photo"
@@ -64,9 +68,13 @@ class RoomPhoto extends React.Component {
                 />
                 <input type="submit" value="update" />
               </form>
+
+              <img src={room.photos[0].image} alt="Room Photos" />
             </div>
           </div>
         );
+      } else {
+        return null;
       }
     }
   }
