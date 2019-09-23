@@ -29,8 +29,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
-gem 'carrierwave'
-gem 'rmagick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -50,10 +48,10 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'active_model_serializers'
-gem 'rack-cors'
 gem 'carrierwave'
+gem 'faker'
+gem 'geocoder'
+gem 'pry-byebug'
+gem 'rack-cors'
 gem 'rmagick'
 gem 'stripe'
-gem 'pry-byebug'
-gem 'geocoder'
-gem 'faker'
