@@ -7,7 +7,7 @@ class RoomListingName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listing_name: this.props.room.listing_name
+      listing_name: ""
     };
   }
 
@@ -59,6 +59,7 @@ class RoomListingName extends React.Component {
                   id="listing_name"
                   type="text"
                   placeholder="listing name"
+                  value={this.state.listing_name}
                   onChange={this.handleChange}
                 />
                 <input type="submit" value="update" />
