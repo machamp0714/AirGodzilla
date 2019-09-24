@@ -11,6 +11,7 @@ const initState = {
 const photoReducer = (state = initState, action) => {
   switch (action.type) {
     case GET_PHOTOS_SUCCESS:
+      console.log(state);
       return {
         ...state,
         photos: action.photos
@@ -20,7 +21,7 @@ const photoReducer = (state = initState, action) => {
     case CREATE_PHOTO_SUCCESS:
       return {
         ...state,
-        photos: [action.photo, ...initState.photos]
+        photo: action.photo
       };
     default:
       return state;

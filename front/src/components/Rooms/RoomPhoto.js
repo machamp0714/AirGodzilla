@@ -21,14 +21,38 @@ class RoomPhoto extends React.Component {
   }
 
   handleChange = (e) => {
-    let files = e.target.files; // FileListオブジェクト
-    // ユーザのコンピュータ内のファイルを非同期に読み込む
-    let reader = new FileReader();
-    // 画像をbase64にエンコードする
-    reader.readAsDataURL(files[0]);
-    reader.onload = () => {
-      this.setState({ image: reader.result }); // 読み込んだファイルの内容
+    let file = e.target.files[0];
+
+    if (
+      file.type !== "image/jpg" &&
+      file.type !== "image/jpeg" &&
+      file.type !== "image/png"
+    ) {
+      return;
+    }
+
+    let canvas = document.getElementById("preview");
+    let ctx = canvas.getContext("2d");
+    let image = new Image();
+    const MAX_WIDTH = 250;
+    const MAX_HEIGHT = 250;
+
+    image.onload = () => {
+      let iw = image.width;
+      let ih = image.height;
+      let ratio = Math.min(MAX_WIDTH / iw, MAX_HEIGHT / ih);
+      let iwScaled = iw * ratio;
+      let ihScaled = ih * ratio;
+
+      canvas.width = iwScaled;
+      canvas.height = ihScaled;
+      ctx.drawImage(image, 0, 0, iwScaled, ihScaled);
+
+      const resizeData = canvas.toDataURL();
+
+      this.setState({ image: resizeData });
     };
+    image.src = URL.createObjectURL(file);
   };
 
   handleSubmit = (e) => {
@@ -64,6 +88,7 @@ class RoomPhoto extends React.Component {
 
             <div className="right-column">
               <h2>Photo</h2>
+              <canvas id="preview" width="0" height="0"></canvas>
               <form onSubmit={this.handleSubmit}>
                 <input id="photo" type="file" onChange={this.handleChange} />
                 <input type="submit" value="update" />
