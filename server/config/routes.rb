@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
       resources :rooms do
-        resources :photos, only: %i[create destroy]
+        resources :photos, only: %i[index create destroy]
 
         member do
           get 'reservations', to: 'reservations#reservations_by_room'
