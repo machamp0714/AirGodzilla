@@ -1,22 +1,26 @@
 import {
   CREATE_PHOTO_SUCCESS,
-  CREATE_PHOTO_ERROR
+  CREATE_PHOTO_ERROR,
+  GET_PHOTOS_SUCCESS
 } from "../../utils/actionTypes";
 
 const initState = {
-  photo: {}
+  photos: []
 };
 
 const photoReducer = (state = initState, action) => {
   switch (action.type) {
-    case CREATE_PHOTO_ERROR:
-      console.log(action.error);
-      return state;
-    case CREATE_PHOTO_SUCCESS:
-      console.log(action.photo);
+    case GET_PHOTOS_SUCCESS:
       return {
         ...state,
-        photo: action.photo
+        photos: action.photos
+      };
+    case CREATE_PHOTO_ERROR:
+      return state;
+    case CREATE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        photos: [action.photo, ...initState.photos]
       };
     default:
       return state;

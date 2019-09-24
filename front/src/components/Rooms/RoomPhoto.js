@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getRoom } from "../../store/actions/roomAction";
-import { createPhoto } from "../../store/actions/photoAction";
+import { getPhotos, createPhoto } from "../../store/actions/photoAction";
 import { Link, Redirect } from "react-router-dom";
 import PhotoList from "../Photos/PhotoList";
 
@@ -14,11 +14,10 @@ class RoomPhoto extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
-    this.props.getRoom(this.props.match.params.id);
-  }
+    const { getRoom, getPhotos } = this.props;
 
-  componentDidMount() {
-    this.props.getRoom(this.props.match.params.id);
+    getRoom(this.props.match.params.id);
+    getPhotos(this.props.match.params.id);
   }
 
   handleChange = (e) => {
@@ -45,7 +44,7 @@ class RoomPhoto extends React.Component {
   };
 
   render() {
-    const { isFetching, user, room } = this.props;
+    const { isFetching, user, room, photos } = this.props;
     if (isFetching) {
       return null;
     } else {
@@ -56,7 +55,7 @@ class RoomPhoto extends React.Component {
             to={{ pathname: "/", state: { message: "Not Permission" } }}
           />
         );
-      } else if (room.photos !== undefined) {
+      } else {
         return (
           <div className="container">
             <div className="left-column">
@@ -70,12 +69,10 @@ class RoomPhoto extends React.Component {
                 <input type="submit" value="update" />
               </form>
 
-              <PhotoList photos={room.photos} />
+              <PhotoList photos={photos} />
             </div>
           </div>
         );
-      } else {
-        return null;
       }
     }
   }
@@ -85,7 +82,8 @@ const mapStateToProps = (state) => {
   return {
     isFetching: state.room.isFetching,
     room: state.room.room,
-    user: state.auth.user
+    user: state.auth.user,
+    photos: state.photo.photos
   };
 };
 
@@ -93,6 +91,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getRoom: (room_id) => {
       dispatch(getRoom(room_id));
+    },
+    getPhotos: (room_id) => {
+      dispatch(getPhotos(room_id));
     },
     createPhoto: (params, room_id) => {
       dispatch(createPhoto(params, room_id));
