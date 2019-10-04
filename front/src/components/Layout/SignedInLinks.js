@@ -1,17 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
-import { logout } from "../../actions/authAction";
 import { NavLink } from "react-router-dom";
-
-import { withStyles } from "@material-ui/styles";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-
-const styles = {
-  root: {
-    marginLeft: "auto"
-  }
-};
 
 class SignedInLinks extends React.Component {
   constructor(props) {
@@ -20,10 +10,6 @@ class SignedInLinks extends React.Component {
       anchorEl: null
     };
   }
-
-  handleLogoutClick = () => {
-    this.props.logout();
-  };
 
   handleMenu = (e) => {
     this.setState({
@@ -39,10 +25,9 @@ class SignedInLinks extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div>
         <NavLink className="navlink" to="/room/new">
           Create Room
         </NavLink>
@@ -65,7 +50,7 @@ class SignedInLinks extends React.Component {
           <MenuItem onClick={this.handleClose}>Profile</MenuItem>
           <MenuItem onClick={this.handleClose}>My Rooms</MenuItem>
           <MenuItem onClick={this.handleClose}>
-            <a href="/" onClick={this.handleLogoutClick}>
+            <a href="/" onClick={() => this.props.logout()}>
               Logout
             </a>
           </MenuItem>
@@ -75,15 +60,4 @@ class SignedInLinks extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logout: () => {
-      dispatch(logout());
-    }
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(withStyles(styles)(SignedInLinks));
+export default SignedInLinks;

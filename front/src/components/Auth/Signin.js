@@ -1,16 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { login } from "../../actions/authAction";
 
 class Signin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
+  state = {
+    email: "",
+    password: ""
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -57,22 +52,4 @@ class Signin extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    loggedInStatus: state.auth.loggedInStatus
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (params) => {
-      dispatch(login(params));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Signin);
+export default Signin;

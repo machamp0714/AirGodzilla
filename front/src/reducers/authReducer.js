@@ -9,7 +9,7 @@ import {
   LOGIN_ERROR,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR
-} from "../../utils/actionTypes";
+} from "../constants/authTypes";
 
 const initState = {
   loggedInStatus: false,

@@ -4,7 +4,7 @@ import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { AppBar, Container, Typography } from "@material-ui/core";
 
-const Navbar = ({ loggedInStatus, isLoading, user }) => {
+const Navbar = ({ loggedInStatus, isLoading, logout }) => {
   if (isLoading) {
     return null;
   } else {
@@ -16,7 +16,11 @@ const Navbar = ({ loggedInStatus, isLoading, user }) => {
               AirGodzilla
             </Link>
           </Typography>
-          {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
+          {loggedInStatus ? (
+            <SignedInLinks logout={logout} />
+          ) : (
+            <SignedOutLinks />
+          )}
         </Container>
       </AppBar>
     );

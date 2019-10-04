@@ -18,6 +18,7 @@ class App extends Component {
           loggedInStatus={loggedInStatus}
           isLoading={isLoading}
           user={user}
+          {...actions}
         />
         <Switch>
           <Route
@@ -28,7 +29,9 @@ class App extends Component {
           />
           <Route
             path="/signin"
-            render={() => <Signin login={actions.login} />}
+            render={() => (
+              <Signin login={actions.login} loggedInStatus={loggedInStatus} />
+            )}
           />
         </Switch>
       </BrowserRouter>
