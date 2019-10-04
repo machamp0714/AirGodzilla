@@ -1,4 +1,4 @@
-import httpClient from "../../components/Config/axios";
+import httpClient from "../components/Config/axios";
 import axios from "axios";
 import {
   AUTHORIZED_REQUEST,
@@ -11,7 +11,7 @@ import {
   LOGIN_ERROR,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR
-} from "../../utils/actionTypes";
+} from "../constants/authTypes";
 
 const loggedInRequest = () => ({
   type: AUTHORIZED_REQUEST

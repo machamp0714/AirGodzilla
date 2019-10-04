@@ -21,7 +21,6 @@ const authReducer = (state = initState, action) => {
   switch (action.type) {
     case AUTHORIZED_REQUEST:
       return {
-        ...state,
         loggedInStatus: false,
         isLoading: true,
         user: {}
@@ -29,7 +28,6 @@ const authReducer = (state = initState, action) => {
     case AUTHORIZED_ERROR:
       console.log("check error", action.error);
       return {
-        ...state,
         loggedInStatus: false,
         isLoading: false,
         user: {}
@@ -37,7 +35,6 @@ const authReducer = (state = initState, action) => {
     case AUTHORIZED_SUCCESS:
       console.log("authorized!");
       return {
-        ...state,
         loggedInStatus: true,
         isLoading: false,
         user: action.user
@@ -45,7 +42,6 @@ const authReducer = (state = initState, action) => {
     case NOT_AUTHORIZED:
       console.log("not authorized");
       return {
-        ...state,
         loggedInStatus: false,
         isLoading: false,
         user: {}
@@ -56,7 +52,6 @@ const authReducer = (state = initState, action) => {
     case SIGNUP_SUCCESS:
       console.log("sign up success");
       return {
-        ...state,
         loggedInStatus: true,
         user: action.user
       };

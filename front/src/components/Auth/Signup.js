@@ -1,7 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { signup } from "../../store/actions/authAction";
 import {
   CssBaseline,
   Container,
@@ -76,21 +74,4 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loggedInStatus: state.auth.loggedInStatus
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signup: (user) => {
-      dispatch(signup(user));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Signup);
+export default Signup;

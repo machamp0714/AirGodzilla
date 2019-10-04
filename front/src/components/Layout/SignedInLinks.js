@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { logout } from "../../store/actions/authAction";
+import { logout } from "../../actions/authAction";
 import { NavLink } from "react-router-dom";
 
 import { withStyles } from "@material-ui/styles";
