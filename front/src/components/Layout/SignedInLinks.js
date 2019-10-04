@@ -28,7 +28,7 @@ class SignedInLinks extends React.Component {
 
     return (
       <div>
-        <NavLink className="navlink" to="/room/new">
+        <NavLink className="navlink" to="/rooms/new">
           Create Room
         </NavLink>
         <IconButton

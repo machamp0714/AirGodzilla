@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
 import Signin from "./components/Auth/Signin";
+import CreateRoom from "./containers/Rooms/CreateRoom";
 
 class App extends Component {
   componentDidMount() {
@@ -33,6 +34,7 @@ class App extends Component {
               <Signin login={actions.login} loggedInStatus={loggedInStatus} />
             )}
           />
+          <Route path="/rooms/new" component={CreateRoom} />
         </Switch>
       </BrowserRouter>
     );
