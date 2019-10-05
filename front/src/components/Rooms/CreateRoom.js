@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateRoom = ({ cookies }) => {
-  console.log(cookies.get("roomValues"));
   const classes = useStyles();
   const [values, setState] = React.useState({
     home_type: cookies.get("roomValues").home_type || "住宅",
@@ -27,6 +26,11 @@ const CreateRoom = ({ cookies }) => {
     bath_room: cookies.get("roomValues").bath_room || 1
   });
   const [isNext, onSwitch] = React.useState(false);
+
+  const setCookies = () => {
+    const currentRoomValues = cookies.get("roomValues");
+    cookies.set("roomValues", { ...currentRoomValues, ...values });
+  };
 
   const handleChange = (e) => {
     // oldValuesをスプレッド展開しないとダメ。
@@ -38,7 +42,7 @@ const CreateRoom = ({ cookies }) => {
   };
 
   const handleClick = () => {
-    cookies.set("roomValues", values);
+    setCookies();
     onSwitch(!isNext);
   };
 

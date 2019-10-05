@@ -25,6 +25,11 @@ const RoomListingName = ({ cookies }) => {
   });
   const [isNext, onSwitch] = React.useState(false);
 
+  const setCookies = () => {
+    const currentRoomValues = cookies.get("roomValues");
+    cookies.set("roomValues", { ...currentRoomValues, ...values });
+  };
+
   const handleChange = (e) => {
     // eventオブジェクトに非同期でアクセスするとエラーが出る。
     e.persist();
@@ -36,10 +41,14 @@ const RoomListingName = ({ cookies }) => {
   };
 
   const handleClick = () => {
-    const prevRoomValues = cookies.get("roomValues");
-    cookies.set("roomValues", { ...prevRoomValues, ...values });
+    setCookies();
     onSwitch(!isNext);
   };
+
+  const handlePrevButton = () => {
+    return <Redirect to="/become-a-host" />;
+  };
+
   if (isNext) {
     return <Redirect to="/" />;
   }
@@ -62,7 +71,7 @@ const RoomListingName = ({ cookies }) => {
       />
 
       <div className={classes.buttonFooter}>
-        <Button variant="contained" color="primary">
+        <Button onClick={handlePrevButton} variant="contained" color="primary">
           戻る
         </Button>
         <Button
