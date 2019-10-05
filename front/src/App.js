@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Top from "./components/Layout/Top";
 import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
 import Signin from "./components/Auth/Signin";
@@ -13,7 +14,6 @@ class App extends Component {
 
   render() {
     const { loggedInStatus, isLoading, user, actions } = this.props;
-
     return (
       <BrowserRouter>
         <Navbar
@@ -23,6 +23,7 @@ class App extends Component {
           {...actions}
         />
         <Switch>
+          <Route exact path="/" component={Top} />
           <Route
             path="/signup"
             render={() => (
@@ -35,11 +36,11 @@ class App extends Component {
               <Signin login={actions.login} loggedInStatus={loggedInStatus} />
             )}
           />
-          <Route path="/become-a-host/" component={CreateRoom} />
           <Route
             path="/become-a-host/listing-name"
             component={RoomListingName}
           />
+          <Route path="/become-a-host" component={CreateRoom} />
         </Switch>
       </BrowserRouter>
     );
