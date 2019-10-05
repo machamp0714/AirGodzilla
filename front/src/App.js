@@ -4,6 +4,7 @@ import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
 import Signin from "./components/Auth/Signin";
 import CreateRoom from "./containers/Rooms/CreateRoom";
+import RoomListingName from "./components/Rooms/RoomListingName";
 
 class App extends Component {
   componentDidMount() {
@@ -34,7 +35,11 @@ class App extends Component {
               <Signin login={actions.login} loggedInStatus={loggedInStatus} />
             )}
           />
-          <Route path="/rooms/new" component={CreateRoom} />
+          <Route path="/become-a-host/" component={CreateRoom} />
+          <Route
+            path="/become-a-host/listing-name"
+            component={RoomListingName}
+          />
         </Switch>
       </BrowserRouter>
     );
