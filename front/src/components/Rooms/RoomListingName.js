@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withCookies } from "react-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -20,10 +20,16 @@ const RoomListingName = ({ cookies }) => {
   const classes = useStyles();
 
   const [values, setState] = React.useState({
-    listing_name: cookies.get("roomValues").listing_name || "",
-    address: cookies.get("roomValues").address || ""
+    listing_name: "",
+    address: ""
   });
   const [isNext, onSwitch] = React.useState(false);
+
+  useEffect(() => {
+    if (cookies.get("roomValues") !== undefined) {
+      setState(cookies.get("roomValues"));
+    }
+  }, [cookies]);
 
   const setCookies = () => {
     const currentRoomValues = cookies.get("roomValues");

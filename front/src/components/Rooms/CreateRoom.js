@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withCookies } from "react-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
@@ -17,15 +17,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateRoom = ({ cookies }) => {
+  console.log(cookies.get("roomValues"));
+
   const classes = useStyles();
   const [values, setState] = React.useState({
-    home_type: cookies.get("roomValues").home_type || "住宅",
-    room_type: cookies.get("roomValues").room_type || "貸切",
-    accommodate: cookies.get("roomValues").accommodate || 4,
-    bed_room: cookies.get("roomValues").bed_room || 2,
-    bath_room: cookies.get("roomValues").bath_room || 1
+    home_type: "住宅",
+    room_type: "貸切",
+    accommodate: 4,
+    bed_room: 2,
+    bath_room: 1
   });
   const [isNext, onSwitch] = React.useState(false);
+
+  useEffect(() => {
+    if (cookies.get("roomValues") !== undefined) {
+      setState(cookies.get("roomValues"));
+    }
+  }, [cookies]);
 
   const setCookies = () => {
     const currentRoomValues = cookies.get("roomValues");
