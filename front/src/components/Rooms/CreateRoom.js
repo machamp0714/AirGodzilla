@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateRoom = ({ cookies }) => {
-  console.log(cookies.get("roomValues"));
-
   const classes = useStyles();
   const [values, setState] = React.useState({
     home_type: "住宅",

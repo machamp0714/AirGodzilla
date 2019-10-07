@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 const useStyles = makeStyles((theme) => ({
   buttonFooter: {
@@ -52,7 +53,8 @@ const RoomListingName = ({ cookies }) => {
   };
 
   const handlePrevButton = () => {
-    return <Redirect to="/become-a-host" />;
+    const history = createBrowserHistory();
+    history.push("/become-a-host");
   };
 
   if (isNext) {
