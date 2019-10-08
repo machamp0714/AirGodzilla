@@ -40,8 +40,8 @@ const RoomListingName = ({ history, cookies }) => {
   }, [cookies]);
 
   const setCookies = () => {
-    const currentRoomValues = cookies.get("roomValues");
-    cookies.set("roomValues", { ...currentRoomValues, ...values });
+    const prevCookies = cookies.get("roomValues");
+    cookies.set("roomValues", { ...prevCookies, ...values });
   };
 
   const handleChange = (e) => {
@@ -64,7 +64,7 @@ const RoomListingName = ({ history, cookies }) => {
   };
 
   if (isNext) {
-    return <Redirect to="/" />;
+    return <Redirect to="/become-a-host/ammenities" />;
   }
   return (
     <Container className={classes.container} width="md">
