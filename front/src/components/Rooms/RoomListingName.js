@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { withCookies } from "react-cookie";
+import { withRouter } from "react-router";
+import { compose } from "recompose";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
-import { createBrowserHistory } from "history";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonFooter: {
     marginTop: 20,
     display: "flex"
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const RoomListingName = ({ cookies }) => {
+const RoomListingName = ({ history, cookies }) => {
   const classes = useStyles();
 
   const [values, setState] = React.useState({
@@ -53,7 +54,6 @@ const RoomListingName = ({ cookies }) => {
   };
 
   const handlePrevButton = () => {
-    const history = createBrowserHistory();
     history.push("/become-a-host");
   };
 
@@ -95,4 +95,7 @@ const RoomListingName = ({ cookies }) => {
   );
 };
 
-export default withCookies(RoomListingName);
+export default compose(
+  withRouter,
+  withCookies
+)(RoomListingName);

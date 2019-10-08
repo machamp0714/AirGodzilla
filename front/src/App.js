@@ -36,11 +36,12 @@ class App extends Component {
               <Signin login={actions.login} loggedInStatus={loggedInStatus} />
             )}
           />
+          <Route exact path="/become-a-host" component={CreateRoom} />
           <Route
+            exact
             path="/become-a-host/listing-name"
             component={RoomListingName}
           />
-          <Route path="/become-a-host" component={CreateRoom} />
         </Switch>
       </BrowserRouter>
     );
