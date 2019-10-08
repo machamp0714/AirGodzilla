@@ -6,9 +6,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
+  container: {
+    marginTop: 40
+  },
   buttonFooter: {
     marginTop: 20,
     display: "flex"
@@ -23,7 +27,9 @@ const RoomListingName = ({ history, cookies }) => {
 
   const [values, setState] = React.useState({
     listing_name: "",
-    address: ""
+    address: "",
+    summary: "",
+    price: ""
   });
   const [isNext, onSwitch] = React.useState(false);
 
@@ -61,13 +67,24 @@ const RoomListingName = ({ history, cookies }) => {
     return <Redirect to="/" />;
   }
   return (
-    <Container width="md">
+    <Container className={classes.container} width="md">
       <TextField
         id="listing_name"
         value={values.listing_name}
         onChange={handleChange}
         label="部屋の名前"
         fullWidth
+        variant="outlined"
+      />
+
+      <TextField
+        id="summary"
+        value={values.summary}
+        onChange={handleChange}
+        label="部屋の説明"
+        multiline
+        rows="6"
+        variant="outlined"
       />
 
       <TextField
@@ -76,6 +93,18 @@ const RoomListingName = ({ history, cookies }) => {
         onChange={handleChange}
         label="住所"
         fullWidth
+        variant="outlined"
+      />
+
+      <TextField
+        id="price"
+        value={values.price}
+        onChange={handleChange}
+        label="価格"
+        variant="outlined"
+        InputProps={{
+          startAdornment: <InputAdornment position="start">¥</InputAdornment>
+        }}
       />
 
       <div className={classes.buttonFooter}>
