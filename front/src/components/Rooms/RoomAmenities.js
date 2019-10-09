@@ -62,7 +62,7 @@ const RoomAmenities = ({ history, cookies }) => {
   };
 
   if (isNext) {
-    return <Redirect to="/" />;
+    return <Redirect to="/become-a-host/photos" />;
   }
 
   return (
@@ -79,7 +79,7 @@ const RoomAmenities = ({ history, cookies }) => {
                 color="primary"
               />
             }
-            label="TV"
+            label="テレビ"
           />
 
           <FormControlLabel
@@ -91,7 +91,7 @@ const RoomAmenities = ({ history, cookies }) => {
                 color="primary"
               />
             }
-            label="Internet"
+            label="インターネット"
           />
 
           <FormControlLabel
@@ -103,7 +103,7 @@ const RoomAmenities = ({ history, cookies }) => {
                 color="primary"
               />
             }
-            label="Kitchen"
+            label="キッチン"
           />
 
           <FormControlLabel
@@ -115,7 +115,7 @@ const RoomAmenities = ({ history, cookies }) => {
                 color="primary"
               />
             }
-            label="Air Conditioner"
+            label="エアコン"
           />
 
           <FormControlLabel
@@ -127,7 +127,7 @@ const RoomAmenities = ({ history, cookies }) => {
                 color="primary"
               />
             }
-            label="Heating"
+            label="暖房器具"
           />
         </FormGroup>
       </FormControl>

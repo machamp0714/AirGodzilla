@@ -7,6 +7,7 @@ import Signin from "./components/Auth/Signin";
 import CreateRoom from "./containers/Rooms/CreateRoom";
 import RoomListingName from "./components/Rooms/RoomListingName";
 import RoomAmenities from "./components/Rooms/RoomAmenities";
+import RoomPhotos from "./containers/Rooms/RoomPhotos";
 
 class App extends Component {
   componentDidMount() {
@@ -48,6 +49,7 @@ class App extends Component {
             path="/become-a-host/ammenities"
             component={RoomAmenities}
           />
+          <Route exact path="/become-a-host/photos" component={RoomPhotos} />
         </Switch>
       </BrowserRouter>
     );

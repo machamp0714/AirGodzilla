@@ -1,0 +1,1 @@
+export const PREVIEW_PHOTO = "PREVIEW_PHOTO";
