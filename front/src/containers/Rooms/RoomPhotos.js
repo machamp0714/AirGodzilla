@@ -1,4 +1,4 @@
-import { previewPhoto } from "../../actions/photoAction";
+import { initPhotos, previewPhoto } from "../../actions/photoAction";
 import RoomPhotos from "../../components/Rooms/RoomPhotos";
 import { connect } from "react-redux";
 
@@ -7,7 +7,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  previewPhoto: (photo) => dispatch(previewPhoto(photo))
+  previewPhoto: (photo) => dispatch(previewPhoto(photo)),
+  initPhotos: (photos) => dispatch(initPhotos(photos))
 });
 
 export default connect(
