@@ -1,12 +1,16 @@
 import { connect } from "react-redux";
-import { createRoom } from "../../actions/roomAction";
 import CreateRoom from "../../components/Rooms/CreateRoom";
+import { addRoomValues } from "../../actions/roomAction";
+
+const mapStateToProps = (state) => ({
+  roomValues: state.room
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  createRoom: (params) => dispatch(createRoom(params))
+  addRoomValues: (values) => dispatch(addRoomValues(values))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreateRoom);

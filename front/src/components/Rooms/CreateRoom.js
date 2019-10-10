@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { withCookies } from "react-cookie";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 import Container from "@material-ui/core/Container";
@@ -16,27 +15,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CreateRoom = ({ cookies }) => {
+const CreateRoom = ({ roomValues, addRoomValues }) => {
   const classes = useStyles();
   const [values, setState] = React.useState({
-    home_type: "住宅",
-    room_type: "貸切",
-    accommodate: 4,
-    bed_room: 2,
-    bath_room: 1
+    home_type: roomValues.home_type || "住宅",
+    room_type: roomValues.room_type || "貸切",
+    accommodate: roomValues.accommodate || 4,
+    bed_room: roomValues.bed_room || 2,
+    bath_room: roomValues.bath_room || 1
   });
   const [isNext, onSwitch] = React.useState(false);
-
-  useEffect(() => {
-    if (cookies.get("roomValues") !== undefined) {
-      setState(cookies.get("roomValues"));
-    }
-  }, [cookies]);
-
-  const setCookies = () => {
-    const currentRoomValues = cookies.get("roomValues");
-    cookies.set("roomValues", { ...currentRoomValues, ...values });
-  };
 
   const handleChange = (e) => {
     // oldValuesをスプレッド展開しないとダメ。
@@ -48,7 +36,7 @@ const CreateRoom = ({ cookies }) => {
   };
 
   const handleClick = () => {
-    setCookies();
+    addRoomValues(values);
     onSwitch(!isNext);
   };
 
@@ -145,4 +133,4 @@ const CreateRoom = ({ cookies }) => {
   );
 };
 
-export default withCookies(CreateRoom);
+export default CreateRoom;

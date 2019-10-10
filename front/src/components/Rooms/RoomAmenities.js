@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { withCookies } from "react-cookie";
+import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
@@ -11,6 +11,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
+import { addRoomValues } from "../../actions/roomAction";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -25,39 +26,28 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const RoomAmenities = ({ history, cookies }) => {
+const RoomAmenities = ({ history, roomValues, addRoomValues }) => {
   const classes = useStyles();
 
   const [values, setState] = React.useState({
-    is_tv: false,
-    is_internet: false,
-    is_kitchen: false,
-    is_air: false,
-    is_heating: false
+    is_tv: roomValues.is_tv || false,
+    is_internet: roomValues.is_internet || false,
+    is_kitchen: roomValues.is_kitchen || false,
+    is_air: roomValues.is_air || false,
+    is_heating: roomValues.is_heating || false
   });
   const [isNext, onSwitch] = React.useState(false);
-
-  useEffect(() => {
-    if (cookies.get("roomValues") !== undefined) {
-      setState(cookies.get("roomValues"));
-    }
-  }, [cookies]);
-
-  const setCookies = () => {
-    const prevCookies = cookies.get("roomValues");
-    cookies.set("roomValues", { ...prevCookies, ...values });
-  };
 
   const handleChange = (name) => (e) => {
     setState({ ...values, [name]: e.target.checked });
   };
 
-  const handlePrevButton = () => {
+  const handlePrevButtonClick = () => {
     history.push("/become-a-host/listing-name");
   };
 
-  const handleClick = () => {
-    setCookies();
+  const handleNextButtonClick = () => {
+    addRoomValues(values);
     onSwitch(!isNext);
   };
 
@@ -133,12 +123,16 @@ const RoomAmenities = ({ history, cookies }) => {
       </FormControl>
 
       <div className={classes.buttonFooter}>
-        <Button onClick={handlePrevButton} variant="contained" color="primary">
+        <Button
+          onClick={handlePrevButtonClick}
+          variant="contained"
+          color="primary"
+        >
           戻る
         </Button>
         <Button
           className={classes.buttonNext}
-          onClick={handleClick}
+          onClick={handleNextButtonClick}
           variant="contained"
           color="primary"
         >
@@ -149,7 +143,18 @@ const RoomAmenities = ({ history, cookies }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  roomValues: state.room
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addRoomValues: (values) => dispatch(addRoomValues(values))
+});
+
 export default compose(
   withRouter,
-  withCookies
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(RoomAmenities);

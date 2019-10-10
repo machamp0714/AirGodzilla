@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import { withCookies } from "react-cookie";
-import { withRouter } from "react-router";
+import React from "react";
+import { connect } from "react-redux";
 import { compose } from "recompose";
+import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Redirect } from "react-router-dom";
+import { addRoomValues } from "../../actions/roomAction";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -22,27 +23,16 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const RoomListingName = ({ history, cookies }) => {
+const RoomListingName = ({ history, roomValues, addRoomValues }) => {
   const classes = useStyles();
 
   const [values, setState] = React.useState({
-    listing_name: "",
-    address: "",
-    summary: "",
-    price: ""
+    listing_name: roomValues.listing_name || "",
+    address: roomValues.address || "",
+    summary: roomValues.summary || "",
+    price: roomValues.price || ""
   });
   const [isNext, onSwitch] = React.useState(false);
-
-  useEffect(() => {
-    if (cookies.get("roomValues") !== undefined) {
-      setState(cookies.get("roomValues"));
-    }
-  }, [cookies]);
-
-  const setCookies = () => {
-    const prevCookies = cookies.get("roomValues");
-    cookies.set("roomValues", { ...prevCookies, ...values });
-  };
 
   const handleChange = (e) => {
     // eventオブジェクトに非同期でアクセスするとエラーが出る。
@@ -54,12 +44,12 @@ const RoomListingName = ({ history, cookies }) => {
     }));
   };
 
-  const handleClick = () => {
-    setCookies();
+  const handleNextButtonClick = () => {
+    addRoomValues(values);
     onSwitch(!isNext);
   };
 
-  const handlePrevButton = () => {
+  const handlePrevButtonClick = () => {
     history.push("/become-a-host");
   };
 
@@ -108,12 +98,16 @@ const RoomListingName = ({ history, cookies }) => {
       />
 
       <div className={classes.buttonFooter}>
-        <Button onClick={handlePrevButton} variant="contained" color="primary">
+        <Button
+          onClick={handlePrevButtonClick}
+          variant="contained"
+          color="primary"
+        >
           戻る
         </Button>
         <Button
           className={classes.buttonNext}
-          onClick={handleClick}
+          onClick={handleNextButtonClick}
           variant="contained"
           color="primary"
         >
@@ -124,7 +118,18 @@ const RoomListingName = ({ history, cookies }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  roomValues: state.room
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addRoomValues: (values) => dispatch(addRoomValues(values))
+});
+
 export default compose(
-  withRouter,
-  withCookies
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withRouter
 )(RoomListingName);

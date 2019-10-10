@@ -1,20 +1,6 @@
-import { CREATE_SUCCESS, CREATE_ERROR } from "../constants/roomTypes";
-import httpClient from "../components/Config/axios";
+import { ADD_ROOM_VALUES } from "../constants/roomTypes";
 
-const createSuccess = () => ({
-  type: CREATE_SUCCESS
+export const addRoomValues = (values) => ({
+  type: ADD_ROOM_VALUES,
+  values
 });
-
-const createError = (error) => ({
-  type: CREATE_ERROR,
-  error
-});
-
-export const createRoom = (params) => {
-  return (dispatch) => {
-    httpClient
-      .post("http://localhost:3001/api/v1/rooms", params)
-      .then((response) => dispatch(createSuccess(response.data.room)))
-      .catch((error) => dispatch(createError(error)));
-  };
-};

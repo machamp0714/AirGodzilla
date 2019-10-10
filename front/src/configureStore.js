@@ -5,7 +5,7 @@ import storage from "redux-persist/lib/storage";
 import rootReducer from "./reducers/rootReducer";
 
 const persistConfig = {
-  key: "roomValues",
+  key: "values",
   storage,
   whitlist: ["room", "photo"]
 };
