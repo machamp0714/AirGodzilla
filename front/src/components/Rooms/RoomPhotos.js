@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withCookies } from "react-cookie";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom";
@@ -31,15 +31,14 @@ const useStyles = makeStyles(() => ({
 const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
   const classes = useStyles();
 
-  console.log(cookies.get("roomValues"));
-
-  const [photoList, setState] = React.useState([]);
+  const [photo, setState] = React.useState({
+    id: "",
+    url: ""
+  });
   const [isNext, onSwitch] = React.useState(false);
 
-  const setCookies = (photoList) => {
-    const roomValues = cookies.get("roomValues");
-    const value = { photos: photoList };
-    cookies.set("roomValues", { ...roomValues, ...value });
+  const setCookies = (photo) => {
+    cookies.set("roomPhotos", { ...photo });
   };
 
   const handlePrevButton = () => {
@@ -47,7 +46,7 @@ const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
   };
 
   const handleClick = () => {
-    setCookies(photoList);
+    setCookies(photo);
     onSwitch(!isNext);
   };
 
@@ -77,7 +76,8 @@ const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
       ctx.drawImage(image, 0, 0, iwScaled, ihScaled);
 
       const resized = canvas.toDataURL("image/jpeg");
-      setState([...photoList, resized]);
+      let id = photo.id || 0;
+      setState({ id: id++, url: resized });
       previewPhoto(resized);
     };
     image.src = URL.createObjectURL(file);

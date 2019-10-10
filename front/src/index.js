@@ -2,20 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./containers/App";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers/rootReducer";
+import store, { persistor } from "./configureStore";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import * as serviceWorker from "./serviceWorker";
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <div className="App">
     <CookiesProvider>
       <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
       </Provider>
     </CookiesProvider>
   </div>,
