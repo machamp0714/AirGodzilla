@@ -1,9 +1,4 @@
-import { PREVIEW_PHOTO, INIT_PHOTOS } from "../constants/photoTypes";
-
-export const initPhotos = (photos) => ({
-  type: INIT_PHOTOS,
-  photos
-});
+import { PREVIEW_PHOTO } from "../constants/photoTypes";
 
 export const previewPhoto = (photo) => ({
   type: PREVIEW_PHOTO,

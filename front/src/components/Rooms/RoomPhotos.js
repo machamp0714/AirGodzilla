@@ -1,5 +1,4 @@
 import React from "react";
-import { withCookies } from "react-cookie";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom";
 import { compose } from "recompose";
@@ -28,25 +27,16 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
+const RoomPhotos = ({ photos, previewPhoto, history }) => {
   const classes = useStyles();
 
-  const [photo, setState] = React.useState({
-    id: "",
-    url: ""
-  });
   const [isNext, onSwitch] = React.useState(false);
 
-  const setCookies = (photo) => {
-    cookies.set("roomPhotos", { ...photo });
-  };
-
-  const handlePrevButton = () => {
+  const handlePrevButtonClick = () => {
     history.push("/become-a-host/ammenities");
   };
 
-  const handleClick = () => {
-    setCookies(photo);
+  const handleNextButtonClick = () => {
     onSwitch(!isNext);
   };
 
@@ -76,8 +66,6 @@ const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
       ctx.drawImage(image, 0, 0, iwScaled, ihScaled);
 
       const resized = canvas.toDataURL("image/jpeg");
-      let id = photo.id || 0;
-      setState({ id: id++, url: resized });
       previewPhoto(resized);
     };
     image.src = URL.createObjectURL(file);
@@ -112,12 +100,16 @@ const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
       </FormControl>
 
       <div className={classes.buttonFooter}>
-        <Button onClick={handlePrevButton} variant="contained" color="primary">
+        <Button
+          onClick={handlePrevButtonClick}
+          variant="contained"
+          color="primary"
+        >
           戻る
         </Button>
         <Button
           className={classes.buttonNext}
-          onClick={handleClick}
+          onClick={handleNextButtonClick}
           variant="contained"
           color="primary"
         >
@@ -128,7 +120,4 @@ const RoomPhotos = ({ photos, previewPhoto, initPhotos, cookies, history }) => {
   );
 };
 
-export default compose(
-  withCookies,
-  withRouter
-)(RoomPhotos);
+export default compose(withRouter)(RoomPhotos);
