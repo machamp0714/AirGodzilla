@@ -1,13 +1,11 @@
 import React from "react";
-import PhotoItem from "./PhotoItem";
+import PhotoItem from "../../containers/Photos/PhotoItem";
 
 const PhotoList = ({ photos }) => {
   return (
     <div>
       {!!photos &&
-        photos.map((photo) => (
-          <PhotoItem photo={photo.url} id={photo.id} key={photo.id} />
-        ))}
+        photos.map((photo) => <PhotoItem photo={photo} key={photo.id} />)}
     </div>
   );
 };
