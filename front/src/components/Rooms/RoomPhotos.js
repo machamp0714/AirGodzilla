@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
+import PhotoList from "../Photos/PhotoList";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -66,6 +67,7 @@ const RoomPhotos = ({ photos, previewPhoto, history }) => {
       ctx.drawImage(image, 0, 0, iwScaled, ihScaled);
 
       const resized = canvas.toDataURL("image/jpeg");
+
       previewPhoto(resized);
     };
     image.src = URL.createObjectURL(file);
@@ -93,11 +95,9 @@ const RoomPhotos = ({ photos, previewPhoto, history }) => {
             写真を選択
           </Button>
         </label>
-        {!!photos &&
-          photos.map((photo, index) => (
-            <img src={photo} alt="写真のプレビュー" key={index} />
-          ))}
       </FormControl>
+
+      <PhotoList photos={photos} />
 
       <div className={classes.buttonFooter}>
         <Button

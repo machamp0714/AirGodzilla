@@ -1,2 +1,2 @@
-export const INIT_PHOTOS = "INIT_PHOTOS";
 export const PREVIEW_PHOTO = "PREVIEW_PHOTO";
+export const REMOVE_PHOTO = "REMOVE_PHOTO";

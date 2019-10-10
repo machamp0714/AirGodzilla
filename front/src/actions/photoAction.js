@@ -1,6 +1,14 @@
-import { PREVIEW_PHOTO } from "../constants/photoTypes";
+import { PREVIEW_PHOTO, REMOVE_PHOTO } from "../constants/photoTypes";
 
-export const previewPhoto = (photo) => ({
+let nextId = 1;
+
+export const previewPhoto = (url) => ({
   type: PREVIEW_PHOTO,
-  photo
+  id: nextId++,
+  url
+});
+
+export const removePhoto = (id) => ({
+  type: REMOVE_PHOTO,
+  id
 });
