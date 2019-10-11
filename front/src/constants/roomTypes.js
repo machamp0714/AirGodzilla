@@ -1,1 +1,3 @@
 export const ADD_ROOM_VALUES = "ADD_ROOM_VALUES";
+export const CREATE_ROOM = "CREATE_ROOM";
+export const CREATE_ROOM_ERROR = "CREATE_ROOM_ERROR";
