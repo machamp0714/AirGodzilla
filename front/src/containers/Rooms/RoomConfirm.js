@@ -4,7 +4,7 @@ import RoomConfirm from "../../components/Rooms/RoomConfirm";
 
 const mapStateToProps = (state) => ({
   roomValues: state.room,
-  photos: state.photo
+  photoValues: state.photo
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -74,7 +74,7 @@ const RoomPhotos = ({ photos, previewPhoto, history }) => {
   };
 
   if (isNext) {
-    return <Redirect to="/" />;
+    return <Redirect to="/become-a-host/confirm" />;
   }
 
   return (

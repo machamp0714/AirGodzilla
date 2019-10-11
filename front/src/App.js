@@ -8,6 +8,7 @@ import CreateRoom from "./containers/Rooms/CreateRoom";
 import RoomListingName from "./components/Rooms/RoomListingName";
 import RoomAmenities from "./components/Rooms/RoomAmenities";
 import RoomPhotos from "./containers/Rooms/RoomPhotos";
+import RoomConfirm from "./containers/Rooms/RoomConfirm";
 
 class App extends Component {
   componentDidMount() {
@@ -50,6 +51,7 @@ class App extends Component {
             component={RoomAmenities}
           />
           <Route exact path="/become-a-host/photos" component={RoomPhotos} />
+          <Route exact path="/become-a-host/confirm" component={RoomConfirm} />
         </Switch>
       </BrowserRouter>
     );
