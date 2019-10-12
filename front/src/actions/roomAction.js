@@ -23,7 +23,7 @@ export const addRoomValues = (values) => ({
 export const createRoom = (params) => {
   return (dispatch) => {
     httpClient
-      .post("http://localhost:3001/api/v1/rooms/new", params)
+      .post("http://localhost:3001/api/v1/rooms", params)
       .then((response) => dispatch(createRoomSuccess(response.data)))
       .catch((error) => dispatch(createRoomError(error)));
   };

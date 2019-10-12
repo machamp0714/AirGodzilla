@@ -19,10 +19,10 @@ const RoomConfirm = ({ roomValues, photoValues, createRoom }) => {
     const params = {
       room: {
         ...roomValues,
-        photos: photos
+        photos_attributes: photos
       }
     };
-    console.log(params);
+    createRoom(params);
   };
 
   return (

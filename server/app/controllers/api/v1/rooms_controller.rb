@@ -8,9 +8,10 @@ class Api::V1::RoomsController < ApplicationController
   end
 
   def create
-    room = current_user.rooms.build(room_params)
-    if room.save
-      render json: { room: room }, status: :created
+    room_registration_form = RoomRegistrationForm.new(room_registration_form_params.merge(user_id: current_user.id))
+
+    if room_registration_form.save
+      render json: { room: room_registration_form }, status: :created
     else
       render json: { error: room.errors, is_success: false }, status: 422
     end
@@ -79,7 +80,7 @@ class Api::V1::RoomsController < ApplicationController
 
   private
 
-  def room_params
+  def room_registration_form_params
     params.require(:room).permit(
       :home_type,
       :room_type,
@@ -94,7 +95,8 @@ class Api::V1::RoomsController < ApplicationController
       :is_air,
       :is_heating,
       :is_internet,
-      :price
+      :price,
+      photos_attributes: []
     )
   end
 end

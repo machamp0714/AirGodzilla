@@ -15,6 +15,15 @@ class Room < ApplicationRecord
   validates :accommodate, presence: true
   validates :bed_room, presence: true
   validates :bath_room, presence: true
+  validates :listing_name, presence: true
+  validates :summary, presence: true
+  validates :address, presence: true
+  validates :price, presence: true
+  validates :is_tv, presence: true
+  validates :is_internet, presence: true
+  validates :is_kitchen, presence: true
+  validates :is_air, presence: true
+  validates :is_heating, presence: true
 
   def cover_photo
     if photos.present?
