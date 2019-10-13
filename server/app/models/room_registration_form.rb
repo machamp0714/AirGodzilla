@@ -9,15 +9,17 @@ class RoomRegistrationForm
     end
   end
 
-  attr_accessor :listing_name, :summary, :room_type, :home_type, :accommodate, :bed_room, :bath_room,
-                :address, :price, :is_tv, :is_internet, :is_kitchen, :is_air, :is_heating, :user_id
+  attr_accessor :home_type, :room_type, :accommodate, :bed_room, :bath_room, :listing_name,
+                :summary, :address, :is_tv, :is_kitchen, :is_air, :is_heating, :is_internet,
+                :price, :photos_attributes, :user_id
 
   def save
     return false if invalid?
 
     room.assign_attributes(room_params)
+    build_association
 
-    if room.save
+    if room.save!
       true
     else
       false
@@ -41,11 +43,14 @@ class RoomRegistrationForm
       is_internet: is_internet,
       is_kitchen: is_kitchen,
       is_air: is_air,
-      is_heating: is_heating
+      is_heating: is_heating,
+      user_id: user_id
     }
   end
 
   def build_association
-    room.photos << photos
+    photos_attributes.each do |image|
+      room.photos << Photo.new(image: image)
+    end
   end
 end
