@@ -1,7 +1,8 @@
 import {
   ADD_ROOM_VALUES,
   CREATE_ROOM,
-  CREATE_ROOM_ERROR
+  CREATE_ROOM_ERROR,
+  CLEAR_STORE
 } from "../constants/roomTypes";
 import httpClient from "../components/Config/axios";
 
@@ -18,6 +19,10 @@ const createRoomError = (error) => ({
 export const addRoomValues = (values) => ({
   type: ADD_ROOM_VALUES,
   values
+});
+
+export const clearRoomStore = () => ({
+  type: CLEAR_STORE
 });
 
 export const createRoom = (params) => {
