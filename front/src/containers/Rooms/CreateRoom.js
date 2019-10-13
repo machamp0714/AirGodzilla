@@ -3,9 +3,8 @@ import CreateRoom from "../../components/Rooms/CreateRoom";
 import { addRoomValues } from "../../actions/roomAction";
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
-    roomValues: state.room
+    roomValues: state.room.values
   };
 };
 

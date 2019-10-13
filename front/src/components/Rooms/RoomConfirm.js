@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -11,7 +12,13 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const RoomConfirm = ({ roomValues, photoValues, createRoom }) => {
+const RoomConfirm = ({
+  roomValues,
+  photoValues,
+  createRoom,
+  clearPhotoStore,
+  isCreated
+}) => {
   const classes = useStyles();
 
   const handleClick = () => {
@@ -24,6 +31,12 @@ const RoomConfirm = ({ roomValues, photoValues, createRoom }) => {
     };
     createRoom(params);
   };
+
+  if (isCreated) {
+    clearPhotoStore();
+
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container className={classes.root} width="md">

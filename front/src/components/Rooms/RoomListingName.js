@@ -119,7 +119,7 @@ const RoomListingName = ({ history, roomValues, addRoomValues }) => {
 };
 
 const mapStateToProps = (state) => ({
-  roomValues: state.room
+  roomValues: state.room.values
 });
 
 const mapDispatchToProps = (dispatch) => ({

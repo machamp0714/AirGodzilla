@@ -1,4 +1,8 @@
-import { PREVIEW_PHOTO, REMOVE_PHOTO } from "../constants/photoTypes";
+import {
+  PREVIEW_PHOTO,
+  REMOVE_PHOTO,
+  CLEAR_STORE
+} from "../constants/photoTypes";
 
 let nextId = 1;
 
@@ -11,4 +15,8 @@ export const previewPhoto = (url) => ({
 export const removePhoto = (id) => ({
   type: REMOVE_PHOTO,
   id
+});
+
+export const clearPhotoStore = () => ({
+  type: CLEAR_STORE
 });

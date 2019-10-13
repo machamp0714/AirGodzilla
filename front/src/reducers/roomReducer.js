@@ -1,27 +1,28 @@
 import {
   ADD_ROOM_VALUES,
   CREATE_ROOM,
-  CREATE_ROOM_ERROR,
-  CLEAR_STORE
+  CREATE_ROOM_ERROR
 } from "../constants/roomTypes";
 
 const initState = {
-  room: {},
+  values: {},
   isCreated: false
 };
 
 const roomReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_ROOM_VALUES:
-      return { ...state.room, ...action.values };
+      return {
+        values: { ...state.values, ...action.values },
+        isCreated: false
+      };
     case CREATE_ROOM:
-      console.log("create success!", action.response);
-      return { isCreated: true };
+      return {
+        values: {},
+        isCreated: true
+      };
     case CREATE_ROOM_ERROR:
-      console.log("create error!", action.error);
       return state;
-    case CLEAR_STORE:
-      return (state.room = {});
     default:
       return state;
   }
