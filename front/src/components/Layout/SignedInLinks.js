@@ -1,58 +1,55 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import { IconButton, Menu, MenuItem, Button } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import { makeStyles } from "@material-ui/core/styles";
 
-class SignedInLinks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      anchorEl: null
-    };
+const useStyles = makeStyles(() => ({
+  navMenu: {
+    marginLeft: "auto"
   }
+}));
 
-  handleMenu = (e) => {
-    this.setState({
-      anchorEl: e.currentTarget
-    });
+const SignedInLinks = ({ logout }) => {
+  const classes = useStyles();
+
+  const [anchorEl, setState] = React.useState(null);
+
+  const handleMenu = (e) => {
+    setState(e.currentTarget);
   };
 
-  handleClose = () => {
-    this.setState({
-      anchorEl: null
-    });
+  const handleClose = () => {
+    setState(null);
   };
 
-  render() {
-    const { anchorEl } = this.state;
-    return (
-      <div>
-        <NavLink className="navlink" to="/become-a-host">
-          Create Room
-        </NavLink>
-        <IconButton
-          aria-label="current user"
-          aria-controls="menu"
-          aria-haspopup="true"
-          onClick={this.handleMenu}
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <Menu
-          id="menu"
-          keepMounted
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleClose}>My Rooms</MenuItem>
-          <MenuItem onClick={this.props.logout}>Logout</MenuItem>
-        </Menu>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes.navMenu}>
+      <Button>
+        <NavLink to="/become-a-host">Create Room</NavLink>
+      </Button>
+      <IconButton
+        aria-label="current user"
+        aria-controls="menu"
+        aria-haspopup="true"
+        onClick={handleMenu}
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+      <Menu
+        id="menu"
+        keepMounted
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My Rooms</MenuItem>
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
+};
 
 export default SignedInLinks;

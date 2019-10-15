@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 const SignedOutLinks = () => {
   return (
-    <ul>
+    <ul className="navMenu">
       <li>
         <Button color="inherit">
           <NavLink className="navlink" to="/signup">
