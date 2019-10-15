@@ -23,7 +23,6 @@ class App extends Component {
           loggedInStatus={loggedInStatus}
           isLoading={isLoading}
           user={user}
-          {...actions}
         />
         <Switch>
           <Route exact path="/" component={Top} />

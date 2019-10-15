@@ -25,7 +25,6 @@ class SignedInLinks extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-
     return (
       <div>
         <NavLink className="navlink" to="/become-a-host">
@@ -49,11 +48,7 @@ class SignedInLinks extends React.Component {
         >
           <MenuItem onClick={this.handleClose}>Profile</MenuItem>
           <MenuItem onClick={this.handleClose}>My Rooms</MenuItem>
-          <MenuItem onClick={this.handleClose}>
-            <a href="/" onClick={() => this.props.logout()}>
-              Logout
-            </a>
-          </MenuItem>
+          <MenuItem onClick={this.props.logout}>Logout</MenuItem>
         </Menu>
       </div>
     );

@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SignedInLinks from "./SignedInLinks";
+import SignedInLinks from "../../containers/Auth/SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { AppBar, Container, Typography } from "@material-ui/core";
 
-const Navbar = ({ loggedInStatus, isLoading, logout }) => {
+const Navbar = ({ loggedInStatus, isLoading }) => {
   if (isLoading) {
     return null;
   } else {
@@ -16,11 +16,7 @@ const Navbar = ({ loggedInStatus, isLoading, logout }) => {
               AirGodzilla
             </Link>
           </Typography>
-          {loggedInStatus ? (
-            <SignedInLinks logout={logout} />
-          ) : (
-            <SignedOutLinks />
-          )}
+          {loggedInStatus ? <SignedInLinks /> : <SignedOutLinks />}
         </Container>
       </AppBar>
     );
