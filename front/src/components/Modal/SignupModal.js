@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -34,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SigninModal = ({ open, handleClose, login }) => {
+const SignupModal = ({ open, handleClose, signup }) => {
   const classes = useStyles();
 
   const [values, setState] = React.useState({
+    name: "",
     email: "",
     password: ""
   });
@@ -50,7 +52,10 @@ const SigninModal = ({ open, handleClose, login }) => {
   };
 
   const handleSubmit = (e) => {
-    login(values);
+    const params = {
+      user: values
+    };
+    signup(params);
 
     e.preventDefault();
   };
@@ -58,9 +63,26 @@ const SigninModal = ({ open, handleClose, login }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <div className={classes.paper}>
-        <TypoGraphy variant="h6">ログイン</TypoGraphy>
+        <TypoGraphy variant="h6">新規登録</TypoGraphy>
         <Divider />
         <form noValidate method="post">
+          <TextField
+            id="name"
+            name="name"
+            type="text"
+            placeholder="ユーザー名"
+            onChange={handleChange}
+            variant="outlined"
+            className={classes.textField}
+            autoComplete="username"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              )
+            }}
+          />
           <TextField
             id="email"
             name="email"
@@ -86,7 +108,7 @@ const SigninModal = ({ open, handleClose, login }) => {
             onChange={handleChange}
             variant="outlined"
             className={classes.textField}
-            autoComplete="current-password"
+            autoComplete="new-password"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -101,7 +123,7 @@ const SigninModal = ({ open, handleClose, login }) => {
             color="secondary"
             onClick={handleSubmit}
           >
-            ログイン
+            新規登録
           </Button>
         </form>
       </div>
@@ -109,4 +131,4 @@ const SigninModal = ({ open, handleClose, login }) => {
   );
 };
 
-export default SigninModal;
+export default SignupModal;
