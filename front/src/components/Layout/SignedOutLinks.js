@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import SigninModal from "../Modal/SigninModal";
+import SigninModal from "../../containers/Auth/SigninModal";
 
 const SignedOutLinks = () => {
   const [open, setOpen] = React.useState(false);
