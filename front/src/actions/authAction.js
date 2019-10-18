@@ -82,12 +82,8 @@ export const signup = (newUser) => {
   return (dispatch) => {
     httpClient
       .post("http://localhost:3001/api/v1/signup", newUser)
-      .then((response) => {
-        dispatch(signupSuccess(response.data.user));
-      })
-      .catch((error) => {
-        dispatch(signupError(error));
-      });
+      .then((response) => dispatch(signupSuccess(response.data.user)))
+      .catch((error) => dispatch(signupError(error)));
   };
 };
 
