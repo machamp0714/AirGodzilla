@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
 class RoomSerializer < ActiveModel::Serializer
-  attributes :id, :listing_name, :address, :home_type, :bed_room, :bath_room, :summary,
-             :price, :active, :user_id, :unavailable_dates
+  attributes :id,
+             :listing_name,
+             :address,
+             :home_type,
+             :bed_room,
+             :bath_room,
+             :summary,
+             :price,
+             :active,
+             :user_id,
+             :unavailable_dates
 
   # def image
   #   @instance_options[:image]

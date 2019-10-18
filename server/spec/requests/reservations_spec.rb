@@ -13,17 +13,20 @@ RSpec.describe 'Reservations API', type: :request do
   end
 
   describe 'POST /create' do
-    let(:valid_attributes) { FactoryBot.attributes_for(:reservation, user: guest, room: @instant_room) }
+    let(:valid_attributes) do
+      FactoryBot.attributes_for(:reservation, user: guest, room: @instant_room)
+    end
 
     context 'room is instant and request is valid' do
       it 'make a reservation' do
-        expect do
-          post api_v1_reservations_path, params: {
-            room_id: @instant_room.id,
-            access_token: guest.access_token,
-            reservation: valid_attributes
-          }
-        end.to change(guest.reservations, :count).by(1)
+        expect {
+          post api_v1_reservations_path,
+               params: {
+                 room_id: @instant_room.id,
+                 access_token: guest.access_token,
+                 reservation: valid_attributes
+               }
+        }.to change(guest.reservations, :count).by(1)
 
         expect(response).to have_http_status 200
       end
@@ -31,13 +34,14 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'room is request and request is valid' do
       it 'make a reservation' do
-        expect do
-          post api_v1_reservations_path, params: {
-            room_id: @request_room.id,
-            access_token: guest.access_token,
-            reservation: valid_attributes
-          }
-        end.to change(guest.reservations, :count).by(1)
+        expect {
+          post api_v1_reservations_path,
+               params: {
+                 room_id: @request_room.id,
+                 access_token: guest.access_token,
+                 reservation: valid_attributes
+               }
+        }.to change(guest.reservations, :count).by(1)
 
         expect(response).to have_http_status 200
         expect(response.body).to include 'Request sent successfully'
@@ -46,11 +50,12 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'user equal the room host user' do
       it 'responds 404 error' do
-        post api_v1_reservations_path, params: {
-          room_id: @instant_room.id,
-          access_token: host.access_token,
-          reservation: valid_attributes
-        }
+        post api_v1_reservations_path,
+             params: {
+               room_id: @instant_room.id,
+               access_token: host.access_token,
+               reservation: valid_attributes
+             }
         expect(response).to have_http_status 404
         expect(response.body).to include 'You cannot book your own property!'
       end
@@ -58,11 +63,12 @@ RSpec.describe 'Reservations API', type: :request do
 
     context 'guest have not stripe_id' do
       it 'responds 404 error' do
-        post api_v1_reservations_path, params: {
-          room_id: @instant_room.id,
-          access_token: user_have_not_stripe.access_token,
-          reservation: valid_attributes
-        }
+        post api_v1_reservations_path,
+             params: {
+               room_id: @instant_room.id,
+               access_token: user_have_not_stripe.access_token,
+               reservation: valid_attributes
+             }
         expect(response).to have_http_status 404
         expect(response.body).to include 'Update your payment method'
       end
@@ -70,26 +76,27 @@ RSpec.describe 'Reservations API', type: :request do
   end
 
   before do
-    @reservation = FactoryBot.create(:reservation, user: guest, room: @instant_room)
+    @reservation =
+      FactoryBot.create(:reservation, user: guest, room: @instant_room)
   end
 
   describe 'booking with approve function' do
     context 'have a permisson' do
       it 'responds a status 200' do
-        patch approve_api_v1_reservation_path(@reservation), params: {
-          room_id: @instant_room.id,
-          access_token: host.access_token
-        }
+        patch approve_api_v1_reservation_path(@reservation),
+              params: {
+                room_id: @instant_room.id, access_token: host.access_token
+              }
         expect(response).to have_http_status 200
       end
     end
 
     context 'not permission' do
       it 'responds 404 error' do
-        patch approve_api_v1_reservation_path(@reservation), params: {
-          room_id: @instant_room.id,
-          access_token: guest.access_token
-        }
+        patch approve_api_v1_reservation_path(@reservation),
+              params: {
+                room_id: @instant_room.id, access_token: guest.access_token
+              }
         expect(response.body).to include 'No Permission'
         expect(response).to have_http_status 404
       end
@@ -99,20 +106,20 @@ RSpec.describe 'Reservations API', type: :request do
   describe 'booking with dicline function' do
     context 'have a permission' do
       it 'responds a status 200' do
-        patch dicline_api_v1_reservation_path(@reservation), params: {
-          room_id: @instant_room.id,
-          access_token: host.access_token
-        }
+        patch dicline_api_v1_reservation_path(@reservation),
+              params: {
+                room_id: @instant_room.id, access_token: host.access_token
+              }
         expect(response).to have_http_status 200
       end
     end
 
     context 'no permission' do
       it 'responds a 404 error' do
-        patch dicline_api_v1_reservation_path(@reservation), params: {
-          room_id: @instant_room.id,
-          access_token: guest.access_token
-        }
+        patch dicline_api_v1_reservation_path(@reservation),
+              params: {
+                room_id: @instant_room.id, access_token: guest.access_token
+              }
         expect(response.body).to include 'No Permission'
         expect(response).to have_http_status 404
       end

@@ -5,9 +5,13 @@ class Api::V1::ReservationsController < ApplicationController
     room = Room.find(params[:room_id])
 
     if current_user.stripe_id.blank?
-      render json: { error: 'Update your payment method', is_success: false }, status: 404
+      render json: { error: 'Update your payment method', is_success: false },
+             status: 404
     elsif current_user == room.user
-      render json: { error: 'You cannot book your own property!', is_success: false }, status: 404
+      render json: {
+               error: 'You cannot book your own property!', is_success: false
+             },
+             status: 404
     else
       start_date = DateTime.parse(reservation_params[:start_date])
       end_date = DateTime.parse(reservation_params[:end_date])
@@ -20,13 +24,17 @@ class Api::V1::ReservationsController < ApplicationController
 
       if reservation.Waiting!
         if room.Request?
-          render json: { message: 'Request sent successfully', is_success: true }, status: :ok
+          render json: {
+                   message: 'Request sent successfully', is_success: true
+                 },
+                 status: :ok
         else
           charge(room, reservation)
           render json: { is_success: true }, status: :ok
         end
       else
-        render json: { error: 'cannot make a reservation!', is_success: false }, status: 404
+        render json: { error: 'cannot make a reservation!', is_success: false },
+               status: 404
       end
     end
   end
@@ -63,18 +71,15 @@ class Api::V1::ReservationsController < ApplicationController
   def charge(room, reservation)
     if reservation.user.stripe_id.present?
       customer = Stripe::Customer.retrieve(reservation.user.stripe_id)
-      charge = Stripe::Charge.create(
-        customer: customer.id,
-        amount: reservation.total * 100,
-        description: room.listing_name,
-        currency: 'usd'
-      )
+      charge =
+        Stripe::Charge.create(
+          customer: customer.id,
+          amount: reservation.total * 100,
+          description: room.listing_name,
+          currency: 'usd'
+        )
 
-      if charge
-        reservation.Approved!
-      else
-        reservation.Dicline!
-      end
+      charge ? reservation.Approved! : reservation.Dicline!
     end
   rescue Stripe::CardError => e
     reservation.Dicline!

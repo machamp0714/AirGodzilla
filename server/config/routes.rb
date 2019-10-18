@@ -6,9 +6,7 @@ Rails.application.routes.draw do
       resources :rooms do
         resources :photos, only: %i[index create destroy]
 
-        member do
-          get 'reservations', to: 'reservations#reservations_by_room'
-        end
+        member { get 'reservations', to: 'reservations#reservations_by_room' }
       end
 
       resources :reservations, only: %i[create] do

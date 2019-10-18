@@ -1,16 +1,8 @@
 include ActionDispatch::TestProcess
 
 # Users
-User.create!(
-  name: 'alice',
-  email: 'alice@gmail.com',
-  password: 'password'
-)
-User.create!(
-  name: 'bob',
-  email: 'bob@gmail.com',
-  password: 'password'
-)
+User.create!(name: 'alice', email: 'alice@gmail.com', password: 'password')
+User.create!(name: 'bob', email: 'bob@gmail.com', password: 'password')
 
 # Rooms
 alice = User.first
@@ -74,6 +66,19 @@ bob.rooms.create!(
 rooms = Room.all
 rooms.each do |room|
   room.photos.create!(
-    image: fixture_file_upload(Rails.root.join('public', 'system', 'photos', 'images', '000', '000', '001', 'medium', 'R21.jpg'))
+    image:
+      fixture_file_upload(
+        Rails.root.join(
+          'public',
+          'system',
+          'photos',
+          'images',
+          '000',
+          '000',
+          '001',
+          'medium',
+          'R21.jpg'
+        )
+      )
   )
 end

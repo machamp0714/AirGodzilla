@@ -9,18 +9,15 @@ class User < ApplicationRecord
   has_many :rooms, dependent: :destroy
   has_many :reservations, dependent: :destroy
 
-  validates :name,
-            presence: true
-  validates :email,
-            presence: true,
-            uniqueness: { case_sensitive: false }
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password,
             presence: true,
             length: { minimum: 8 },
             # validationの実行タイミングを指定する。
             on: :create
-            # 属性の値がblank?に相当する時、validationをスキップする
-            # allow_blank: true
+  # 属性の値がblank?に相当する時、validationをスキップする
+  # allow_blank: true
 
   private
 
