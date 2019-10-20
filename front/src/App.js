@@ -47,15 +47,25 @@ class App extends Component {
           <Route
             exact
             path="/become-a-host/listing-name"
-            component={RoomListingName}
+            render={() => (
+              <LoggedInRequired WrappedComponent={RoomListingName} />
+            )}
           />
           <Route
             exact
             path="/become-a-host/ammenities"
-            component={RoomAmenities}
+            render={() => <LoggedInRequired WrappedComponent={RoomAmenities} />}
           />
-          <Route exact path="/become-a-host/photos" component={RoomPhotos} />
-          <Route exact path="/become-a-host/confirm" component={RoomConfirm} />
+          <Route
+            exact
+            path="/become-a-host/photos"
+            render={() => <LoggedInRequired WrappedComponent={RoomPhotos} />}
+          />
+          <Route
+            exact
+            path="/become-a-host/confirm"
+            render={() => <LoggedInRequired WrappedComponent={RoomConfirm} />}
+          />
         </Switch>
       </BrowserRouter>
     );
