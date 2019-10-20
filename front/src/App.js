@@ -1,14 +1,15 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, {Component} from "react";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Top from "./components/Layout/Top";
 import Navbar from "./components/Layout/Navbar";
 import Signup from "./components/Auth/Signup";
-import Signin from "./components/Auth/Signin";
+import Signin from "./containers/Auth/Signin";
 import CreateRoom from "./containers/Rooms/CreateRoom";
 import RoomListingName from "./components/Rooms/RoomListingName";
 import RoomAmenities from "./components/Rooms/RoomAmenities";
 import RoomPhotos from "./containers/Rooms/RoomPhotos";
 import RoomConfirm from "./containers/Rooms/RoomConfirm";
+import LoggedInRequired from "./containers/Auth/LoggedInRequired";
 
 class App extends Component {
   componentDidMount() {
@@ -16,7 +17,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedInStatus, isLoading, user, actions } = this.props;
+    const {loggedInStatus, isLoading, user, actions} = this.props;
     return (
       <BrowserRouter>
         <Navbar
@@ -38,7 +39,11 @@ class App extends Component {
               <Signin login={actions.login} loggedInStatus={loggedInStatus} />
             )}
           />
-          <Route exact path="/become-a-host" component={CreateRoom} />
+          <Route
+            exact
+            path="/become-a-host"
+            render={() => <LoggedInRequired WrappedComponent={CreateRoom} />}
+          />
           <Route
             exact
             path="/become-a-host/listing-name"
