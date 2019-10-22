@@ -1,7 +1,7 @@
 import React from "react";
 
 const Top = (props) => {
-  return <div></div>;
+  return <div>Top</div>;
 };
 
 export default Top;
