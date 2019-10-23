@@ -2,7 +2,7 @@
 
 class Api::V1::RoomsController < ApplicationController
   def index
-    rooms = Room.where(active: true)
+    rooms = Room.all
 
     render json: rooms, status: :ok
   end
