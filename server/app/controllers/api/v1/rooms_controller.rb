@@ -39,7 +39,7 @@ class Api::V1::RoomsController < ApplicationController
           date.strftime('%Y-%m-%d')
         end
       end.flatten
-        .to_set
+                  .to_set
 
     if !room.nil?
       room_serializer =
@@ -66,20 +66,6 @@ class Api::V1::RoomsController < ApplicationController
   def destroy
     Room.find(params[:id]).destroy
     head :no_content
-  end
-
-  def your_listings
-    rooms = current_user.rooms
-    render json: {
-             rooms:
-               rooms.map { |r|
-                 r.attributes.merge(
-                   image: r.cover_photo, instant: r.instant != 'Request'
-                 )
-               },
-             is_success: true
-           },
-           status: :ok
   end
 
   def your_room
