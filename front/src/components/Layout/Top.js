@@ -1,47 +1,69 @@
-import React, {useEffect} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
-const Top = () => {
-  let mapDisplay = React.createRef();
+class Top extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addressInput = React.createRef();
+    this.state = {
+      address: "Sydney, NSW",
+      map: null
+    };
+  }
 
-  const [address, setAddress] = React.useState("Sydney, NSW");
-  const [map, setMap] = React.useState(null);
+  componentDidMount() {
+    this.setState({
+      map: new window.google.maps.Map(
+        ReactDOM.findDOMNode(this.addressInput.current),
+        {
+          zoom: 16,
+          center: new window.google.maps.LatLng(-34.397, 150.644)
+        }
+      )
+    });
+  }
 
-  useEffect(() => {
-    setMap(
-      new window.google.maps.Map(ReactDOM.findDOMNode(mapDisplay.current), {
-        zoom: 8,
-        center: new window.google.maps.LatLng(-34.397, 150.644)
-      })
-    );
-  }, map);
+  handleChange = (e) => {
+    this.setState({address: e.target.value});
+  };
 
-  const handleClick = () => {
+  handleClick = () => {
     const geocoder = new window.google.maps.Geocoder();
 
-    geocoder.geocode({address: address}, (results, status) => {
+    geocoder.geocode({address: this.state.address}, (results, status) => {
       if (status === "OK") {
-        map.setCenter(results[0].geometry.location);
+        this.state.map.setCenter(results[0].geometry.location);
         const marker = new window.google.maps.Marker({
-          map: map,
+          map: this.state.map,
           position: results[0].geometry.location
         });
+        return marker;
       } else {
         alert("Geocode was not successful");
       }
     });
   };
 
-  return (
-    <div>
-      <div id="map" ref={mapDisplay} style={{width: 320, height: 480}} />
-
+  render() {
+    return (
       <div>
-        <input type="text" value={address} />
-        <input type="button" value="Encode" onClick={handleClick} />
+        <div
+          id="map"
+          ref={this.addressInput}
+          style={{width: 320, height: 480}}
+        />
+
+        <div>
+          <input
+            type="text"
+            value={this.state.address}
+            onChange={this.handleChange}
+          />
+          <input type="button" value="Encode" onClick={this.handleClick} />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Top;
