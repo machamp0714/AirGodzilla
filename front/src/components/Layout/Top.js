@@ -4,9 +4,10 @@ import ReactDOM from "react-dom";
 class Top extends React.Component {
   constructor(props) {
     super(props);
+
     this.addressInput = React.createRef();
     this.state = {
-      address: "Sydney, NSW",
+      query: "",
       map: null
     };
   }
@@ -17,30 +18,28 @@ class Top extends React.Component {
         ReactDOM.findDOMNode(this.addressInput.current),
         {
           zoom: 16,
-          center: new window.google.maps.LatLng(-34.397, 150.644)
+          center: new window.google.maps.LatLng(29.571068, 126.897583)
         }
       )
     });
   }
 
   handleChange = (e) => {
-    this.setState({address: e.target.value});
+    this.setState({query: e.target.value});
   };
 
-  handleClick = () => {
-    const geocoder = new window.google.maps.Geocoder();
+  handleSubmit = () => {
+    const request = {
+      query: this.state.query,
+      fields: ["name", "geometry"]
+    };
+    const service = new window.google.maps.places.PlacesService(this.state.map);
 
-    geocoder.geocode({address: this.state.address}, (results, status) => {
-      if (status === "OK") {
-        this.state.map.setCenter(results[0].geometry.location);
-        const marker = new window.google.maps.Marker({
-          map: this.state.map,
-          position: results[0].geometry.location
-        });
-        return marker;
-      } else {
-        alert("Geocode was not successful");
+    service.findPlaceFromQuery(request, (results, status) => {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        console.log(results);
       }
+      this.state.map.setCenter(results[0].geometry.location);
     });
   };
 
@@ -56,10 +55,10 @@ class Top extends React.Component {
         <div>
           <input
             type="text"
-            value={this.state.address}
+            value={this.state.query}
             onChange={this.handleChange}
           />
-          <input type="button" value="Encode" onClick={this.handleClick} />
+          <input type="button" value="Encode" onClick={this.handleSubmit} />
         </div>
       </div>
     );
