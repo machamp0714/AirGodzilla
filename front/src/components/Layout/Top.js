@@ -7,7 +7,8 @@ class Top extends React.Component {
 
     this.addressInput = React.createRef();
     this.state = {
-      query: "",
+      address: "",
+      latlng: new window.google.maps.LatLng(-34.397, 150.644),
       map: null
     };
   }
@@ -17,30 +18,62 @@ class Top extends React.Component {
       map: new window.google.maps.Map(
         ReactDOM.findDOMNode(this.addressInput.current),
         {
-          zoom: 16,
-          center: new window.google.maps.LatLng(29.571068, 126.897583)
+          zoom: 10,
+          center: this.state.latlng
         }
       )
     });
   }
 
   handleChange = (e) => {
-    this.setState({query: e.target.value});
+    this.setState({address: e.target.value});
   };
 
-  handleSubmit = () => {
-    const request = {
-      query: this.state.query,
-      fields: ["name", "geometry"]
-    };
-    const service = new window.google.maps.places.PlacesService(this.state.map);
+  createGeocoderPromisee = () => {
+    const geocoder = new window.google.maps.Geocoder();
 
-    service.findPlaceFromQuery(request, (results, status) => {
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({address: this.state.address}, (results, status) => {
+        if (status === "OK") {
+          resolve(results);
+        } else {
+          reject(status);
+        }
+      });
+    });
+  };
+
+  getGoecode = () => {
+    this.createGeocoderPromisee()
+      .then((results) => {
+        this.setState({latlng: results[0].geometry.location});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  mapsNearBySearch = () => {
+    const service = new window.google.maps.places.PlacesService(this.state.map);
+    const request = {
+      location: this.state.latlng,
+      radius: "1000",
+      type: ["cafe"]
+    };
+
+    service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         console.log(results);
+      } else {
+        console.log(status);
       }
-      this.state.map.setCenter(results[0].geometry.location);
     });
+  };
+
+  handleClick = () => {
+    this.getGoecode();
+
+    this.mapsNearBySearch();
   };
 
   render() {
@@ -55,10 +88,10 @@ class Top extends React.Component {
         <div>
           <input
             type="text"
-            value={this.state.query}
+            value={this.state.address}
             onChange={this.handleChange}
           />
-          <input type="button" value="Encode" onClick={this.handleSubmit} />
+          <input type="button" value="Encode" onClick={this.handleClick} />
         </div>
       </div>
     );
